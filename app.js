@@ -134,7 +134,39 @@
   }
 
   // ==========================================================================
-  // 3. SIMULATION DE PIPELINE CI/CD
+  // 3. BOUTONS COPIER GÉNÉRIQUES (dans les exemples de code pédagogiques)
+  // ==========================================================================
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.copy-btn');
+    if (!btn) return;
+
+    var codeId = btn.getAttribute('data-code');
+    if (!codeId) return;
+
+    var codeEl = document.getElementById(codeId);
+    if (!codeEl) return;
+
+    var rawText = codeEl.textContent || codeEl.innerText;
+
+    function done() {
+      btn.textContent = '✅ Copié !';
+      setTimeout(function () {
+        btn.textContent = '📋 Copier'; }, 2500); }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(rawText).then(done).catch(function () {
+        fallbackCopy(rawText);
+        done();
+      });
+    } else {
+      fallbackCopy(rawText);
+      done();
+    }
+  });
+
+  // ==========================================================================
+  // 4. SIMULATION DE PIPELINE CI/CD
   // ==========================================================================
 
   const demoBtn = document.getElementById('btn-demo-push');
@@ -175,7 +207,64 @@
   }
 
   // ==========================================================================
-  // 4. KEYBOARD NAVIGATION : touches fléchées entre onglets
+  // 5. QUIZ INTERACTIF : sélection d'une réponse → feedback immédiat
+  // ==========================================================================
+
+  document.addEventListener('click', function (e) {
+    var option = e.target.closest('.quiz__option');
+    if (!option) return;
+
+    var question = option.closest('.quiz__question');
+    if (!question) return;
+
+    // Ignorer si déjà répondu
+    if (question.classList.contains('quiz__question--answered')) return;
+
+    // Marquer la question comme répondue
+    question.classList.add('quiz__question--answered');
+
+    // Désactiver toutes les options de la question
+    var allOptions = question.querySelectorAll('.quiz__option');
+    allOptions.forEach(function (opt) {
+      opt.classList.add('quiz__option--disabled');
+    });
+
+    // Marquer l'option cliquée
+    var isCorrect = option.getAttribute('data-correct') === 'true';
+    option.classList.add('quiz__option--selected');
+    option.classList.add(isCorrect ? 'quiz__option--correct' : 'quiz__option--incorrect');
+
+    // Si incorrecte, révéler la bonne réponse
+    if (!isCorrect) {
+      allOptions.forEach(function (opt) {
+        if (opt.getAttribute('data-correct') === 'true') {
+          opt.classList.add('quiz__option--correct');
+        }
+      });
+    }
+
+    // Afficher le feedback
+    var feedback = question.querySelector('.quiz__feedback');
+    if (feedback) {
+      feedback.classList.add('quiz__feedback--visible');
+    }
+
+    // Mettre à jour le compteur
+    updateQuizScore(question.closest('.quiz'));
+  });
+
+  function updateQuizScore(quiz) {
+    if (!quiz) return;
+    var questions = quiz.querySelectorAll('.quiz__question');
+    var answered = quiz.querySelectorAll('.quiz__question--answered');
+    var result = quiz.querySelector('.quiz__result');
+    if (result) {
+      result.textContent = '✅ ' + answered.length + ' / ' + questions.length + ' question(s) répondue(s)';
+    }
+  }
+
+  // ==========================================================================
+  // 6. KEYBOARD NAVIGATION : touches fléchées entre onglets
   // ==========================================================================
 
   const tabList = document.querySelector('.tabs-nav__list');

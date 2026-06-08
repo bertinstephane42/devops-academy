@@ -173,6 +173,178 @@
           </p>
         </div>
       </div>
+
+      <!-- ===== CONTENU PÉDAGOGIQUE SUPPLÉMENTAIRE ===== -->
+
+      <div class="guide-section">
+        <h3>📖 Les concepts en détail</h3>
+        <p>
+          La <strong>planification DevOps</strong> ne se limite pas à un calendrier de livraison.
+          Elle emprunte au <strong>manifeste Agile</strong> (2001) quatre valeurs fondamentales&nbsp;:
+          les individus et leurs interactions plutôt que les processus et outils, un logiciel
+          fonctionnel plutôt qu'une documentation exhaustive, la collaboration avec le client
+          plutôt que la négociation contractuelle, et l'adaptation au changement plutôt que le
+          suivi d'un plan rigide.
+        </p>
+        <p>
+          En DevOps, la planification est <strong>continue et itérative</strong>. Contrairement
+          au cycle en cascade (Waterfall) où tout est figé en amont, une équipe DevOps planifie
+          par <strong>sprints</strong> (cycles de 1 à 4 semaines) avec des <strong>rétrospectives</strong>
+          régulières qui ajustent le processus. Le <strong>Lean</strong> ajoute le concept de
+          <em>gaspillage</em>&nbsp;: tout ce qui n'apporte pas de valeur au client (attentes,
+          rework, documentation superflue) doit être éliminé.
+        </p>
+      </div>
+
+      <div class="guide-section">
+        <h3>⚠️ Pièges à éviter</h3>
+        <div class="troubleshooting">
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Sprints trop longs → feedback trop tardif</summary>
+            <div class="troubleshooting__answer">
+              Un sprint de 4 semaines retarde le retour utilisateur. En DevOps, on préfère des
+              cycles <strong>courts</strong> (1 à 2 semaines) pour valider rapidement les
+              hypothèses et corriger la trajectoire.
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">WIP illimité en Kanban → goulots d'étranglement</summary>
+            <div class="troubleshooting__answer">
+              Sans limite de travaux en cours, les tâches s'accumulent et rien ne se termine.
+              Fixez une limite <strong>WIP</strong> (Work In Progress) par colonne pour révéler
+              les goulots et fluidifier le flux.
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Planifier sans impliquer les ops</summary>
+            <div class="troubleshooting__answer">
+              Si les équipes ops ne participent pas à la planification, les contraintes
+              d'infrastructure, de sécurité et de monitoring sont ignorées. Résultat&nbsp;:
+              des fonctionnalités impossibles à déployer ou à maintenir.
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Rétrospectives sautées → erreurs répétées</summary>
+            <div class="troubleshooting__answer">
+              Sans rétrospective, l'équipe reproduit les mêmes problèmes sprint après sprint.
+              La rétrospective est le moteur de <strong>l'amélioration continue</strong>.
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>📚 Lexique</h3>
+        <div class="glossary-grid">
+          <div class="glossary-item">
+            <span class="glossary-term">Sprint</span>
+            <span class="glossary-def">Cycle de développement itératif d'une durée fixe (1–4 semaines)
+              au terme duquel un incrément potentiellement livrable est produit.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Backlog</span>
+            <span class="glossary-def">Liste ordonnée des fonctionnalités, correctifs et
+              améliorations à réaliser, priorisée par la valeur métier.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">User Story</span>
+            <span class="glossary-def">Description d'une fonctionnalité du point de vue de
+              l'utilisateur final, format&nbsp;: «&nbsp;En tant que… je veux… afin de…&nbsp;».</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">WIP (Work In Progress)</span>
+            <span class="glossary-def">Nombre maximum de tâches autorisées dans une colonne
+              Kanban. Limiter le WIP révèle les goulots et améliore le flux.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Burndown Chart</span>
+            <span class="glossary-def">Graphique qui montre le travail restant dans un sprint
+              jour après jour. Permet de visualiser si l'équipe est dans les temps.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Daily Stand-up</span>
+            <span class="glossary-def">Réunion quotidienne de 15 minutes maximum où chaque
+              membre répond&nbsp;: qu'ai-je fait, que vais-je faire, quels sont les blocages.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Definition of Done</span>
+            <span class="glossary-def">Liste de critères qu'une user story doit remplir pour
+              être considérée comme terminée (codée, testée, documentée, déployée).</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Vélocité</span>
+            <span class="glossary-def">Mesure du travail qu'une équipe accomplit par sprint.
+              Sert à prévoir la capacité future et à détecter les tendances.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>💡 Exemple concret</h3>
+        <div class="card">
+          <p><strong>Scénario</strong>&nbsp;: Une équipe de 5 développeurs utilise
+            <strong>GitHub Projects</strong> pour planifier un sprint de 2 semaines.</p>
+          <ol class="numbered-list">
+            <li>Le Product Owner priorise le <strong>backlog</strong> avec des user stories
+              estimées en <strong>story points</strong> (1, 2, 3, 5, 8).</li>
+            <li>Lors du <strong>sprint planning</strong>, l'équipe sélectionne les stories
+              qu'elle s'engage à livrer, en fonction de sa <strong>vélocité</strong>
+              historique (ex&nbsp;: 25 story points).</li>
+            <li>Chaque matin, le <strong>Daily Stand-up</strong> de 15 min synchronise l'équipe.
+              Le <strong>tableau Kanban</strong> dans GitHub Projects suit le flux&nbsp;:
+              <em>Backlog → Ready → In Progress → Review → Done</em>.</li>
+            <li>En milieu de sprint, un imprévu survient. L'équipe réajuste le périmètre
+              plutôt que de reporter la date — c'est l'<strong>inspect and adapt</strong>
+              d'Agile.</li>
+            <li>En fin de sprint, la <strong>review</strong> présente le résultat au client
+              et la <strong>rétrospective</strong> améliore le processus pour le sprint suivant.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>🧠 Quiz express</h3>
+        <div class="quiz">
+          <div class="quiz__question">
+            <p class="quiz__text">1. Quelle est la durée recommandée d'un sprint en DevOps ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">3 à 6 mois</li>
+              <li class="quiz__option" data-correct="false">1 mois minimum</li>
+              <li class="quiz__option" data-correct="true">1 à 2 semaines</li>
+              <li class="quiz__option" data-correct="false">La durée n'a pas d'importance</li>
+            </ul>
+            <p class="quiz__feedback">Les sprints courts (1-2 semaines) permettent un feedback rapide,
+              une détection précoce des problèmes et une capacité d'adaptation élevée — des principes
+              clés en DevOps.</p>
+          </div>
+          <div class="quiz__question">
+            <p class="quiz__text">2. Que signifie limiter le WIP dans un tableau Kanban ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">Travailler plus lentement</li>
+              <li class="quiz__option" data-correct="true">Fixer un nombre maximum de tâches en cours pour révéler les goulots</li>
+              <li class="quiz__option" data-correct="false">Ne jamais commencer une nouvelle tâche</li>
+              <li class="quiz__option" data-correct="false">Supprimer les tâches inachevées</li>
+            </ul>
+            <p class="quiz__feedback">Limiter le WIP force l'équipe à terminer ce qui est commencé
+              avant de démarrer de nouvelles tâches, ce qui révèle les goulots d'étranglement et
+              améliore la fluidité du flux de valeur.</p>
+          </div>
+          <div class="quiz__question">
+            <p class="quiz__text">3. Quel est le principal objectif d'une rétrospective de sprint ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">Faire le bilan des tâches accomplies</li>
+              <li class="quiz__option" data-correct="false">Assigner les responsabilités pour les échecs</li>
+              <li class="quiz__option" data-correct="true">Améliorer le processus de travail pour le prochain sprint</li>
+              <li class="quiz__option" data-correct="false">Planifier les vacances de l'équipe</li>
+            </ul>
+            <p class="quiz__feedback">La rétrospective est le moteur de l'amélioration continue
+              (kaizen). Elle permet à l'équipe d'inspecter son fonctionnement et de définir
+              des actions concrètes pour s'améliorer — sans chercher de coupables.</p>
+          </div>
+          <p class="quiz__result"></p>
+        </div>
+      </div>
+
     </section>
 
     <!-- Onglet 2 – Développement -->
@@ -213,6 +385,188 @@ fix(auth): corriger le token expiré en session
 docs(readme): mettre à jour les instructions d'installation</code></pre>
         </div>
       </div>
+
+      <!-- ===== CONTENU PÉDAGOGIQUE SUPPLÉMENTAIRE ===== -->
+
+      <div class="guide-section">
+        <h3>📖 Les concepts en détail</h3>
+        <p>
+          Le <strong>développement DevOps</strong> repose sur une gestion rigoureuse du code
+          source avec <strong>Git</strong>, le système de contrôle de versions le plus utilisé.
+          Git permet de suivre l'historique complet des modifications, de collaborer sans
+          écrasement, et de revenir à n'importe quel état antérieur.
+        </p>
+        <p>
+          Les <strong>stratégies de branching</strong> sont cruciales&nbsp;:
+        </p>
+        <ul>
+          <li><strong>Git Flow</strong>&nbsp;: le plus structuré, avec <code>develop</code>,
+            <code>feature/*</code>, <code>release/*</code>, <code>hotfix/*</code>. Idéal pour
+            des projets à cycle de publication fixe mais complexe à gérer.</li>
+          <li><strong>GitHub Flow</strong>&nbsp;: minimaliste — une seule branche <code>main</code>
+            et des branches de fonctionnalités. Chaque merge passe par une PR validée. Idéal pour
+            la livraison continue.</li>
+          <li><strong>Trunk-based Development</strong>&nbsp;: branches très courtes (moins d'un jour),
+            intégration multiple fois par jour. Requiert une CI solide et une discipline d'équipe.
+            C'est le modèle privilégié par Google, Netflix et Facebook.</li>
+        </ul>
+        <p>
+          Les <strong>conventional commits</strong> (format <code>type(scope): message</code>)
+          automatisent la génération de changelog, le versionnement sémantique et le déclenchement
+          conditionnel de pipelines CI/CD.
+        </p>
+      </div>
+
+      <div class="guide-section">
+        <h3>⚠️ Pièges à éviter</h3>
+        <div class="troubleshooting">
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Commits trop volumineux → revert impossible</summary>
+            <div class="troubleshooting__answer">
+              Un commit qui touche 30 fichiers est impossible à annuler proprement si un problème
+              survient. Préférez des <strong>commits atomiques</strong> (un changement logique
+              par commit).
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">PR sans review → qualité et sécurité fragiles</summary>
+            <div class="troubleshooting__answer">
+              Une Pull Request non revue (ou mergée en solo) contourne la détection collégiale
+              des bugs et des problèmes de conception. Exigez au moins <strong>une review
+              approuvée</strong> avant merge.
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Merge direct dans main sans PR</summary>
+            <div class="troubleshooting__answer">
+              Pousser directement sur <code>main</code> supprime toute barrière de qualité.
+              Activez la <strong>protection de branche</strong> dans GitHub pour bloquer les push
+              directs et exiger des vérifications CI passées.
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Ignorer les secrets dans le dépôt</summary>
+            <div class="troubleshooting__answer">
+              Commiter une clé API ou un mot de passe expose l'infrastructure. Utilisez
+              <strong>.gitignore</strong>, les <strong>secrets GitHub</strong> et des
+              outils comme <strong>git-secrets</strong> ou <strong>truffleHog</strong>
+              pour les détecter automatiquement.
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>📚 Lexique</h3>
+        <div class="glossary-grid">
+          <div class="glossary-item">
+            <span class="glossary-term">Commit</span>
+            <span class="glossary-def">Instantané des modifications du code à un instant T,
+              identifié par un hash SHA-1 unique, avec un message descriptif.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Branch</span>
+            <span class="glossary-def">Ligne de développement indépendante qui diverge de la
+              branche principale pour travailler sur une fonctionnalité ou un correctif.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Pull Request (PR)</span>
+            <span class="glossary-def">Demande d'intégration d'une branche dans une autre,
+              avec discussion, revue de code et vérifications automatisées.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Code Review</span>
+            <span class="glossary-def">Examen systématique du code par un ou plusieurs pairs
+              avant son intégration, visant la qualité, la sécurité et la maintenabilité.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Conventional Commit</span>
+            <span class="glossary-def">Convention de message de commit structuré
+              (type, scope, description) qui permet l'auto-génération de changelog et le
+              versionnement sémantique automatique.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Merge Conflict</span>
+            <span class="glossary-def">Situation où Git ne peut pas fusionner automatiquement
+              deux branches car les mêmes lignes ont été modifiées différemment.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Rebase</span>
+            <span class="glossary-def">Réécriture de l'historique qui repositionne les commits
+              d'une branche à la suite d'une autre, offrant un historique linéaire.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Hooks (Git)</span>
+            <span class="glossary-def">Scripts déclenchés automatiquement par des événements Git
+              (pre-commit, pre-push) pour appliquer des vérifications locales.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>💡 Exemple concret</h3>
+        <div class="card">
+          <p><strong>Scénario</strong>&nbsp;: Alice doit ajouter une fonctionnalité
+            «&nbsp;réinitialisation de mot de passe&nbsp;» sur une application Node.js.</p>
+          <ol class="numbered-list">
+            <li>Alice crée une branche <code>feature/reset-password</code> depuis <code>main</code>
+              à jour.</li>
+            <li>Elle code la fonctionnalité en plusieurs <strong>commits atomiques</strong>&nbsp;:
+              un pour le formulaire frontend, un pour l'API backend, un pour les tests automatisés.</li>
+            <li>Chaque commit suit la convention&nbsp;: <code>feat(auth): ajouter le formulaire de réinitialisation</code>.</li>
+            <li>Alice pousse sa branche et ouvre une <strong>Pull Request</strong> sur GitHub.</li>
+            <li>Bob, son binôme, effectue une <strong>code review</strong> et demande une
+              modification sur la gestion des tokens.</li>
+            <li>Alice corrige, pousse un nouveau commit, la PR est approuvée et mergée dans <code>main</code>.</li>
+            <li>Après le merge, la branche de fonctionnalité est supprimée pour garder le dépôt propre.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>🧠 Quiz express</h3>
+        <div class="quiz">
+          <div class="quiz__question">
+            <p class="quiz__text">1. Quelle est la principale différence entre GitHub Flow et Git Flow ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">Git Flow ne permet pas les branches</li>
+              <li class="quiz__option" data-correct="false">GitHub Flow utilise Subversion</li>
+              <li class="quiz__option" data-correct="true">GitHub Flow est plus simple avec une seule branche permanente (<code>main</code>)</li>
+              <li class="quiz__option" data-correct="false">Git Flow ne supporte pas les PR</li>
+            </ul>
+            <p class="quiz__feedback">GitHub Flow ne conserve qu'une branche <code>main</code> permanente
+              et utilise des branches de fonctionnalités éphémères. Git Flow ajoute <code>develop</code>,
+              <code>release/*</code> et <code>hotfix/*</code>, ce qui le rend plus adapté aux cycles
+              de publication fixes mais plus complexe.</p>
+          </div>
+          <div class="quiz__question">
+            <p class="quiz__text">2. Quel avantage apporte le Trunk-based Development par rapport à Git Flow ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">Moins de tests à écrire</li>
+              <li class="quiz__option" data-correct="true">Intégration continue plusieurs fois par jour, idéal pour la livraison continue</li>
+              <li class="quiz__option" data-correct="false">Aucun conflit de merge possible</li>
+              <li class="quiz__option" data-correct="false">Pas besoin de CI</li>
+            </ul>
+            <p class="quiz__feedback">Le Trunk-based Development impose des branches très courtes
+              (moins d'un jour) et des intégrations multiples quotidiennes. Cela réduit la complexité
+              des merges et accélère la livraison, mais exige une CI robuste et une discipline stricte.</p>
+          </div>
+          <div class="quiz__question">
+            <p class="quiz__text">3. Dans un conventional commit, que signifie le type <code>fix</code> ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">Une nouvelle fonctionnalité</li>
+              <li class="quiz__option" data-correct="true">Un correctif de bug</li>
+              <li class="quiz__option" data-correct="false">Une mise à jour de documentation</li>
+              <li class="quiz__option" data-correct="false">Une modification de configuration</li>
+            </ul>
+            <p class="quiz__feedback">Le type <code>fix</code> indique un correctif de bug.
+              Associé au versionnement sémantique, il déclenche automatiquement un incrément
+              de version <strong>PATCH</strong> (ex&nbsp;: 1.2.3 → 1.2.4).</p>
+          </div>
+          <p class="quiz__result"></p>
+        </div>
+      </div>
+
     </section>
 
     <!-- Onglet 3 – Intégration Continue -->
@@ -252,6 +606,206 @@ docs(readme): mettre à jour les instructions d'installation</code></pre>
           </p>
         </div>
       </div>
+
+      <!-- ===== CONTENU PÉDAGOGIQUE SUPPLÉMENTAIRE ===== -->
+
+      <div class="guide-section">
+        <h3>📖 Les concepts en détail</h3>
+        <p>
+          L'<strong>Intégration Continue (CI)</strong> est une pratique de développement où
+          chaque développeur intègre son code dans le tronc commun <strong>plusieurs fois par
+          jour</strong>. Chaque intégration est vérifiée par une <strong>compilation
+          automatisée</strong> et une <strong>batterie de tests</strong> pour détecter les
+          régressions le plus tôt possible.
+        </p>
+        <p>
+          Le concept a été popularisé par <strong>Grady Booch</strong> dans les années 1990,
+          puis formalisé par <strong>Martin Fowler</strong>. La CI repose sur trois piliers&nbsp;:
+        </p>
+        <ul>
+          <li><strong>Dépôt centralisé</strong>&nbsp;: tout le monde travaille sur la même base
+            de code, partagée via Git.</li>
+          <li><strong>Build automatisé</strong>&nbsp;: un script reproductible compile le projet,
+            résout les dépendances et exécute les tests.</li>
+          <li><strong>Feedback rapide</strong>&nbsp;: le développeur est notifié dans les minutes
+            qui suivent si son code a cassé quelque chose.</li>
+        </ul>
+        <p>
+          Les <strong>pipelines CI</strong> modernes (GitHub Actions, GitLab CI, Jenkins)
+          enchaînent des jobs&nbsp;: lint → test → build → analyse de qualité. Chaque job
+          s'exécute dans un conteneur isolé, garantissant la reproductibilité.
+        </p>
+        <p>
+          En DevOps, le mantra est&nbsp;: <em>«&nbsp;If it hurts, do it more often&nbsp;»</em>.
+          Plus les intégrations sont fréquentes, moins les conflits sont coûteux.
+        </p>
+      </div>
+
+      <div class="guide-section">
+        <h3>⚠️ Pièges à éviter</h3>
+        <div class="troubleshooting">
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Pipeline CI qui dure plus de 15 minutes</summary>
+            <div class="troubleshooting__answer">
+              Un feedback lent tue la CI. Optimisez le parallélisme des jobs, utilisez du
+              <strong>caching</strong> des dépendances et fractionnez les tests longs.
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Tests non déterministes (flaky tests)</summary>
+            <div class="troubleshooting__answer">
+              Un test qui échoue une fois sur deux sans raison détruit la confiance dans la CI.
+              Isolez les tests, supprimez les dépendances temporelles et réexécutez les tests
+              flaky dans une <strong>CI retry</strong> limitée.
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Merge sans CI passée</summary>
+            <div class="troubleshooting__answer">
+              Si les PR peuvent être mergées malgré un pipeline rouge, la CI n'a plus de valeur.
+              Activez la <strong>protection de branche</strong> avec «&nbsp;Require status
+              checks&nbsp;» pour bloquer les merges non conformes.
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Pipeline qui dépend de l'environnement local</summary>
+            <div class="troubleshooting__answer">
+              «&nbsp;Ça marche en local&nbsp;!&nbsp;» — si la CI utilise une config différente,
+              le build échoue. Containerisez votre build avec <strong>Docker</strong> pour
+              garantir la reproductibilité.
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>📚 Lexique</h3>
+        <div class="glossary-grid">
+          <div class="glossary-item">
+            <span class="glossary-term">Pipeline CI</span>
+            <span class="glossary-def">Suite automatisée d'étapes (lint, test, build, analyse)
+              exécutées à chaque push pour valider la qualité du code.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Runner</span>
+            <span class="glossary-def">Agent logiciel qui exécute les jobs d'un pipeline.
+              GitHub fournit des runners hébergés (Ubuntu, Windows, macOS) ou on peut utiliser
+              ses propres runners autohébergés.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Test unitaire</span>
+            <span class="glossary-def">Test qui vérifie le comportement d'une unité de code
+              isolée (fonction, méthode, classe). Rapide et déterministe.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Test d'intégration</span>
+            <span class="glossary-def">Test qui vérifie les interactions entre plusieurs
+              composants (API, base de données, services externes).</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Code Coverage</span>
+            <span class="glossary-def">Pourcentage de code exécuté par les tests. Indicateur
+              utile mais ne garantit pas l'absence de bugs.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Linting</span>
+            <span class="glossary-def">Analyse statique du code pour détecter les erreurs
+              de syntaxe, les mauvaises pratiques et les incohérences de style.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Artifact</span>
+            <span class="glossary-def">Fichier produit par le build (JAR, Docker image, package
+              npm) conservé pour les étapes avales (déploiement, publication).</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Fail Fast</span>
+            <span class="glossary-def">Principe qui consiste à échouer immédiatement dès qu'une
+              étape critique échoue, pour économiser du temps et des ressources.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>💡 Exemple concret</h3>
+        <div class="card">
+          <p><strong>Scénario</strong>&nbsp;: L'équipe Frontend utilise GitHub Actions pour
+            valider chaque PR sur une application React.</p>
+          <div class="code-sample">
+            <div class="code-sample__header">
+              <span>Fichier <code>.github/workflows/ci.yml</code></span>
+              <button class="copy-btn" data-code="ci-panel3">📋 Copier</button>
+            </div>
+            <pre><code id="code-ci-panel3">name: CI
+on: [push, pull_request]
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test -- --coverage
+      - run: npm run build</code></pre>
+          </div>
+          <ol class="numbered-list">
+            <li>Dès qu'Alice pousse sa branche <code>feature/dark-mode</code>, GitHub Actions
+              déclenche la pipeline.</li>
+            <li>Le job <strong>quality</strong> s'exécute sur Ubuntu&nbsp;: il installe les
+              dépendances via <code>npm ci</code> (déterministe), exécute le linter (ESLint),
+              lance les tests avec couverture, et vérifie que le build passe.</li>
+            <li>Si tout est vert, la PR peut être mergée. Si une étape échoue, Alice reçoit
+              une notification et corrige avant que le bug n'atteigne la branche principale.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>🧠 Quiz express</h3>
+        <div class="quiz">
+          <div class="quiz__question">
+            <p class="quiz__text">1. À quelle fréquence un développeur doit-il intégrer son code en CI ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">Une fois par sprint</li>
+              <li class="quiz__option" data-correct="false">Une fois par semaine</li>
+              <li class="quiz__option" data-correct="false">Une fois par jour</li>
+              <li class="quiz__option" data-correct="true">Plusieurs fois par jour</li>
+            </ul>
+            <p class="quiz__feedback">Le principe fondamental de la CI est d'intégrer le code
+              <strong>plusieurs fois par jour</strong>. Cela réduit la portée de chaque
+              intégration et permet de détecter les conflits et régressions très tôt.</p>
+          </div>
+          <div class="quiz__question">
+            <p class="quiz__text">2. Quel est le principal avantage d'un pipeline CI rapide (&lt; 10 min) ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">Économiser des ressources serveur</li>
+              <li class="quiz__option" data-correct="false">Pouvoir déployer plus souvent</li>
+              <li class="quiz__option" data-correct="true">Donner un feedback immédiat au développeur</li>
+              <li class="quiz__option" data-correct="false">Supprimer le besoin de tests manuels</li>
+            </ul>
+            <p class="quiz__feedback">Le feedback rapide est la clé de la CI : le développeur
+              sait en quelques minutes si son code a cassé quelque chose, peut corriger
+              immédiatement pendant que le contexte est frais, et ne bloque pas l'équipe.</p>
+          </div>
+          <div class="quiz__question">
+            <p class="quiz__text">3. Que signifie l'expression «&nbsp;Fail Fast&nbsp;» dans un pipeline CI ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">Abandonner le projet si un test échoue</li>
+              <li class="quiz__option" data-correct="true">Arrêter immédiatement le pipeline dès qu'une étape échoue</li>
+              <li class="quiz__option" data-correct="false">Exécuter les tests les plus longs en premier</li>
+              <li class="quiz__option" data-correct="false">Ignorer les échecs pour gagner du temps</li>
+            </ul>
+            <p class="quiz__feedback">Le principe <strong>Fail Fast</strong> stoppe le pipeline
+              dès la première erreur pour économiser du temps, des ressources et donner un
+              feedback immédiat au développeur sans attendre la fin des autres étapes.</p>
+          </div>
+          <p class="quiz__result"></p>
+        </div>
+      </div>
+
     </section>
 
     <!-- Onglet 4 – Déploiement Continu -->
@@ -303,6 +857,199 @@ COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80</code></pre>
         </div>
       </div>
+
+      <!-- ===== CONTENU PÉDAGOGIQUE SUPPLÉMENTAIRE ===== -->
+
+      <div class="guide-section">
+        <h3>📖 Les concepts en détail</h3>
+        <p>
+          Le <strong>Déploiement Continu (CD)</strong> est l'étape qui suit la CI dans le
+          pipeline DevOps. Là où la CI valide que le code est intégrable et fonctionnel, la CD
+          <strong>déploie automatiquement</strong> ce code validé dans un environnement cible
+          (staging, production) sans action humaine.
+        </p>
+        <p>
+          Il ne faut pas confondre&nbsp;:
+        </p>
+        <ul>
+          <li><strong>Continuous Delivery</strong>&nbsp;: le code est toujours prêt à être
+            déployé en production, mais le déclenchement du déploiement est <strong>manuel</strong>
+            (décision métier). C'est l'approche la plus répandue dans les organisations matures.</li>
+          <li><strong>Continuous Deployment</strong>&nbsp;: le déploiement en production est
+            <strong>automatique</strong> dès que la CI est passée. Plus risqué, mais plus rapide.
+            Pratiqué par Netflix, Etsy, Amazon.</li>
+        </ul>
+        <p>
+          Les stratégies de déploiement permettent de <strong>réduire les risques</strong>&nbsp;:
+        </p>
+        <ul>
+          <li><strong>Blue/Green</strong>&nbsp;: deux environnements (Blue et Green) identiques.
+            Bascule instantanée du trafic. Rollback immédiat en une seconde.</li>
+          <li><strong>Canary</strong>&nbsp;: la nouvelle version est exposée à un petit %
+            d'utilisateurs (ex&nbsp;: 5 %). Si les métriques sont bonnes, on étend
+            progressivement à 100 %. Netflix l'utilise avec son système <strong>Spinnaker</strong>.</li>
+          <li><strong>Rolling update</strong>&nbsp;: les instances sont remplacées une par une.
+            Aucun temps d'arrêt, mais le rollback est plus lent.</li>
+          <li><strong>Feature flags</strong>&nbsp;: une fonctionnalité est déployée mais
+            désactivée. On l'active à distance sans nouveau déploiement. Outils&nbsp;:
+            LaunchDarkly, Flagsmith.</li>
+        </ul>
+        <p>
+          La <strong>conteneurisation</strong> avec Docker est le standard moderne du CD&nbsp;:
+          une image <strong>immuable</strong> (même contenu en dev, test, prod) évite les
+          dérives de configuration.
+        </p>
+      </div>
+
+      <div class="guide-section">
+        <h3>⚠️ Pièges à éviter</h3>
+        <div class="troubleshooting">
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Environnements non identiques → bugs de prod</summary>
+            <div class="troubleshooting__answer">
+              Si staging et production diffèrent (OS, versions, config), ce qui marche en test
+              peut échouer en prod. Utilisez <strong>Docker</strong> ou <strong>IaC</strong>
+              (Infrastructure as Code) pour garantir l'identité.
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Absence de rollback automatisé</summary>
+            <div class="troubleshooting__answer">
+              Sans procédure de retour arrière, un déploiement défectueux bloque l'équipe
+              pendant des heures. Automatisez le rollback (ex&nbsp;: `kubectl rollout undo`
+              ou bascule Blue/Green inverse).
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Déploiement trop rare → stress et erreurs</summary>
+            <div class="troubleshooting__answer">
+              Déployer une fois par mois accumule des centaines de modifications : impossible
+              de savoir ce qui a causé un incident. Plus on déploie, plus c'est sûr.
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Feature flags non nettoyés</summary>
+            <div class="troubleshooting__answer">
+              Les flags qui restent dans le code après activation définitive créent une dette
+              technique. Supprimez le flag une fois la fonctionnalité validée par tous
+              les utilisateurs.
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>📚 Lexique</h3>
+        <div class="glossary-grid">
+          <div class="glossary-item">
+            <span class="glossary-term">Continuous Delivery</span>
+            <span class="glossary-def">Pratique où le code est toujours en état d'être déployé
+              en production, mais le déclenchement du déploiement reste une décision manuelle.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Continuous Deployment</span>
+            <span class="glossary-def">Extension du Continuous Delivery où chaque changement
+              validé par la CI est automatiquement déployé en production.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Docker</span>
+            <span class="glossary-def">Outil de conteneurisation qui empaquette une application
+              et ses dépendances dans une image légère et reproductible.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Blue/Green Deployment</span>
+            <span class="glossary-def">Stratégie de déploiement avec deux environnements
+              identiques : un actif (Blue), un inactif (Green). Bascule instantanée pour
+              le déploiement et le rollback.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Canary Release</span>
+            <span class="glossary-def">Déploiement progressif où la nouvelle version est
+              exposée à un petit % d'utilisateurs avant extension à 100 %.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Feature Flag</span>
+            <span class="glossary-def">Mécanisme qui active ou désactive une fonctionnalité
+              à l'exécution sans nouveau déploiement, via une configuration distante.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Rollback</span>
+            <span class="glossary-def">Retour à une version précédente après un déploiement
+              problématique. Idéalement automatisé et rapide.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Immutable Infrastructure</span>
+            <span class="glossary-def">Approche où les serveurs ne sont jamais modifiés après
+              leur déploiement. On les remplace entièrement plutôt que de les mettre à jour.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>💡 Exemple concret</h3>
+        <div class="card">
+          <p><strong>Scénario</strong>&nbsp;: Une équipe déploie une application Node.js avec
+            Docker sur un cluster Kubernetes (K8s) en stratégie Rolling update.</p>
+          <ol class="numbered-list">
+            <li>La CI construit et pousse une image Docker taguée avec le hash du commit
+              (<code>registry.example.com/app:a1b2c3d</code>).</li>
+            <li>Le pipeline CD met à jour le manifeste Kubernetes
+              (<code>deployment.yaml</code>) avec la nouvelle image.</li>
+            <li><code>kubectl apply -f deployment.yaml</code> déclenche un
+              <strong>Rolling update</strong>&nbsp;: Kubernetes remplace les pods un par un
+              tout en maintenant le service actif.</li>
+            <li>Des <strong>health checks</strong> (readiness + liveness probes) valident que
+              chaque nouveau pod est fonctionnel avant de passer au suivant.</li>
+            <li>Si les probes échouent, Kubernetes stoppe automatiquement le déploiement
+              et conserve l'état précédent — c'est un <strong>rollback automatique</strong>.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>🧠 Quiz express</h3>
+        <div class="quiz">
+          <div class="quiz__question">
+            <p class="quiz__text">1. Quelle est la différence entre Continuous Delivery et Continuous Deployment ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">Continuous Deployment nécessite Docker</li>
+              <li class="quiz__option" data-correct="true">Continuous Delivery laisse le déclenchement manuel, Continuous Deployment est automatique</li>
+              <li class="quiz__option" data-correct="false">Continuous Delivery est plus rapide</li>
+              <li class="quiz__option" data-correct="false">Continuous Deployment ne passe pas par la CI</li>
+            </ul>
+            <p class="quiz__feedback">Continuous Delivery signifie que le code est toujours
+              prêt à être déployé, mais un humain décide du moment. Continuous Deployment
+              pousse automatiquement chaque changement validé en production.</p>
+          </div>
+          <div class="quiz__question">
+            <p class="quiz__text">2. Quel est l'avantage principal d'un déploiement Blue/Green ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">Économiser des ressources serveur</li>
+              <li class="quiz__option" data-correct="true">Rollback immédiat en basculant le trafic vers l'environnement précédent</li>
+              <li class="quiz__option" data-correct="false">Tester en production sans risque</li>
+              <li class="quiz__option" data-correct="false">Éviter d'écrire des tests</li>
+            </ul>
+            <p class="quiz__feedback">Avec Blue/Green, deux environnements identiques sont
+              maintenus. En cas de problème, basculer le trafic vers l'environnement précédent
+              prend une seconde — le rollback le plus rapide possible.</p>
+          </div>
+          <div class="quiz__question">
+            <p class="quiz__text">3. Comment Docker garantit-il la reproductibilité des déploiements ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">En compilant le code plus vite</li>
+              <li class="quiz__option" data-correct="false">En supprimant les tests</li>
+              <li class="quiz__option" data-correct="true">En empaquetant l'application avec toutes ses dépendances dans une image immuable</li>
+              <li class="quiz__option" data-correct="false">En déployant sur un seul serveur</li>
+            </ul>
+            <p class="quiz__feedback">Une image Docker contient l'application, l'OS de base,
+              les dépendances, les variables d'environnement et la configuration. Cette image
+              est identique où qu'elle s'exécute (dev, staging, prod), supprimant le fameux
+              «&nbsp;ça marche en local&nbsp;».</p>
+          </div>
+          <p class="quiz__result"></p>
+        </div>
+      </div>
+
     </section>
 
     <!-- Onglet 5 – Monitoring -->
@@ -333,6 +1080,196 @@ EXPOSE 80</code></pre>
           </div>
         </div>
       </div>
+
+      <!-- ===== CONTENU PÉDAGOGIQUE SUPPLÉMENTAIRE ===== -->
+
+      <div class="guide-section">
+        <h3>📖 Les concepts en détail</h3>
+        <p>
+          Le <strong>monitoring</strong> est l'activité qui consiste à collecter, analyser
+          et visualiser des données sur l'état d'un système en production. L'<strong>observabilité</strong>
+          va plus loin&nbsp;: c'est la capacité de <strong>comprendre</strong> l'état interne
+          d'un système à partir de ses sorties externes (logs, métriques, traces), sans avoir
+          à ajouter du code spécifique pour chaque question.
+        </p>
+        <p>
+          Les trois piliers de l'observabilité&nbsp;:
+        </p>
+        <ul>
+          <li><strong>Logs</strong>&nbsp;: événements textuels horodatés avec niveau
+            (INFO, WARN, ERROR). Une bonne pratique est le <strong>logging structuré</strong>
+            (JSON) pour faciliter l'indexation et la recherche. Outils&nbsp;:
+            ELK Stack (Elasticsearch, Logstash, Kibana), Loki, CloudWatch.</li>
+          <li><strong>Métriques</strong>&nbsp;: données numériques agrégées dans le temps
+            (CPU, mémoire, taux d'erreur, latence). Les <strong>4 golden signals</strong>
+            de Google SRE sont&nbsp;: latence, trafic, erreurs, saturation. Outils&nbsp;:
+            Prometheus, Grafana, Datadog.</li>
+          <li><strong>Traces</strong>&nbsp;: suivi d'une requête à travers tous les services
+            d'une architecture distribuée (APM). Permet d'identifier le service responsable
+            d'une latence excessive. Outils&nbsp;: Jaeger, OpenTelemetry, Zipkin.</li>
+        </ul>
+        <p>
+          En DevOps, le monitoring boucle la rétroaction&nbsp;: les alertes remontent aux
+          équipes Dev via Slack/PagerDuty, et les <strong>post-mortems</strong> sans blâme
+          alimentent le backlog d'amélioration continue.
+        </p>
+      </div>
+
+      <div class="guide-section">
+        <h3>⚠️ Pièges à éviter</h3>
+        <div class="troubleshooting">
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Trop d'alertes → alerte fatigue</summary>
+            <div class="troubleshooting__answer">
+              Si tout alerte, plus rien n'est pris au sérieux. Définissez des <strong>seuils
+              pertinents</strong> et utilisez des <strong>règles d'agrégation</strong> pour
+              réduire le bruit. Privilégiez la qualité à la quantité.
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Piloter sur des vanity metrics</summary>
+            <div class="troubleshooting__answer">
+              Surveiller le nombre de requêtes sans regarder la latence ou le taux d'erreur
+              donne une illusion de santé. Suivez les <strong>4 golden signals</strong> de
+              Google SRE.
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Pas de dashboards partagés</summary>
+            <div class="troubleshooting__answer">
+              Si chaque équipe a son outil sans visibilité croisée, les incidents sont traités
+              en silo. Centralisez dans un <strong>Grafana</strong> commun avec des dashboards
+              consultables par toutes les équipes.
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Post-mortems avec recherche de coupable</summary>
+            <div class="troubleshooting__answer">
+              Une culture du blâme pousse les équipes à cacher les erreurs. Les post-mortems
+              doivent être <strong>sans blame</strong> et orientés vers l'amélioration du
+              système, pas vers la punition.
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>📚 Lexique</h3>
+        <div class="glossary-grid">
+          <div class="glossary-item">
+            <span class="glossary-term">Observabilité</span>
+            <span class="glossary-def">Capacité à inférer l'état interne d'un système à partir
+              de ses sorties externes (logs, métriques, traces), sans ajout de code spécifique.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Log structuré</span>
+            <span class="glossary-def">Message de log formaté en JSON avec des champs
+              standardisés (timestamp, niveau, service, message) pour faciliter l'indexation
+              et la recherche automatisée.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">4 Golden Signals</span>
+            <span class="glossary-def">Les quatre métriques essentielles selon Google SRE :
+              latence, trafic, taux d'erreur, saturation.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">SRE (Site Reliability Engineering)</span>
+            <span class="glossary-def">Discipline qui applique les principes du génie logiciel
+              aux opérations d'infrastructure, popularisée par Google.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">SLI / SLO / SLA</span>
+            <span class="glossary-def">Indicateur de niveau de service (SLI), objectif (SLO),
+              accord (SLA). Cadre pour définir et mesurer la fiabilité du service.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">APM</span>
+            <span class="glossary-def">Application Performance Monitoring. Outil qui trace les
+              requêtes de bout en bout dans une architecture distribuée.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Post-mortem</span>
+            <span class="glossary-def">Analyse rétrospective d'un incident, sans recherche de
+              coupable, visant à améliorer le système et les processus.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Alert Fatigue</span>
+            <span class="glossary-def">Désensibilisation des équipes face à un trop grand
+              nombre d'alertes non pertinentes, entraînant des incidents ignorés.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>💡 Exemple concret</h3>
+        <div class="card">
+          <p><strong>Scénario</strong>&nbsp;: L'équipe SRE déploie une stack Prometheus + Grafana
+            pour surveiller une application microservices.</p>
+          <ol class="numbered-list">
+            <li><strong>Prometheus</strong> scrape toutes les 15 secondes les métriques exposées
+              par chaque microservice sur <code>/metrics</code>&nbsp;: nombre de requêtes,
+              latence p50/p95/p99, taux d'erreur, consommation mémoire.</li>
+            <li><strong>Grafana</strong> visualise ces métriques sur un dashboard partagé avec
+              l'équipe Dev : un graphique montre l'évolution de la latence p99 après chaque
+              déploiement.</li>
+            <li><strong>Alertmanager</strong> (Prometheus) déclenche une alerte si la latence
+              p99 dépasse 500 ms pendant 5 minutes. L'alerte est envoyée sur Slack et
+              PagerDuty.</li>
+            <li>L'ingénieur de garde reçoit la notification, consulte le dashboard Grafana,
+              identifie que le microservice <em>payments</em> est le goulet, et ouvre une
+              issue GitHub prioritaire.</li>
+            <li>Après le correctif, un <strong>post-mortem</strong> documente l'incident,
+              la cause racine et les actions pour éviter la récidive.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>🧠 Quiz express</h3>
+        <div class="quiz">
+          <div class="quiz__question">
+            <p class="quiz__text">1. Quels sont les trois piliers de l'observabilité ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">CPU, mémoire, disque</li>
+              <li class="quiz__option" data-correct="true">Logs, métriques, traces</li>
+              <li class="quiz__option" data-correct="false">Tests, build, déploiement</li>
+              <li class="quiz__option" data-correct="false">Dev, staging, production</li>
+            </ul>
+            <p class="quiz__feedback">Les trois piliers sont les <strong>logs</strong>
+              (événements textuels), les <strong>métriques</strong> (données numériques
+              agrégées) et les <strong>traces</strong> (suivi distribué des requêtes).
+              Ensemble, ils permettent l'observabilité d'un système.</p>
+          </div>
+          <div class="quiz__question">
+            <p class="quiz__text">2. Que représentent les «&nbsp;4 golden signals&nbsp;» de Google SRE ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">Les 4 langages de programmation à utiliser</li>
+              <li class="quiz__option" data-correct="false">Les 4 étapes du déploiement continu</li>
+              <li class="quiz__option" data-correct="true">Les 4 métriques clés à surveiller : latence, trafic, erreurs, saturation</li>
+              <li class="quiz__option" data-correct="false">Les 4 outils de monitoring recommandés</li>
+            </ul>
+            <p class="quiz__feedback">Les 4 golden signals sont <strong>latence</strong>
+              (temps de réponse), <strong>trafic</strong> (demandes par seconde),
+              <strong>taux d'erreur</strong> (échecs explicites ou implicites),
+              et <strong>saturation</strong> (niveau d'utilisation des ressources).</p>
+          </div>
+          <div class="quiz__question">
+            <p class="quiz__text">3. Pourquoi les logs structurés (JSON) sont-ils préférés aux logs texte libre ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">Ils sont plus courts</li>
+              <li class="quiz__option" data-correct="false">Ils sont plus faciles à lire par un humain</li>
+              <li class="quiz__option" data-correct="true">Ils sont indexables et recherchables automatiquement par des outils comme Elasticsearch</li>
+              <li class="quiz__option" data-correct="false">Ils ne nécessitent pas de serveur</li>
+            </ul>
+            <p class="quiz__feedback">Les logs JSON incluent des champs structurés
+              (timestamp, niveau, service, message) qui peuvent être indexés, filtrés
+              et recherchés par des moteurs comme Elasticsearch, permettant une analyse
+              rapide même à grande échelle.</p>
+          </div>
+          <p class="quiz__result"></p>
+        </div>
+      </div>
+
     </section>
 
     <!-- Onglet 6 – GitHub & CI/CD (INTERACTIF - GUIDE DÉTAILLÉ) -->
