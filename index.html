@@ -442,7 +442,7 @@ git push -u origin main</code></pre>
             <div class="glossary-item">
               <span class="glossary-term">Step</span>
               <span class="glossary-def">Action unitaire : une commande shell ou une <em>action</em>
-                réutilisable (ex: <code>actions/checkout@v4</code>).</span>
+                réutilisable (ex: <code>actions/checkout@v6</code>).</span>
             </div>
             <div class="glossary-item">
               <span class="glossary-term">Runner (GitHub-hosted)</span>
@@ -461,7 +461,7 @@ git push -u origin main</code></pre>
             <div class="glossary-item">
               <span class="glossary-term">Action</span>
               <span class="glossary-def">Brique réutilisable publiée sur le GitHub Marketplace.
-                Exemple : <code>actions/checkout@v4</code> clone le dépôt.</span>
+                Exemple : <code>actions/checkout@v6</code> clone le dépôt.</span>
             </div>
             <div class="glossary-item">
               <span class="glossary-term">Artifact</span>
@@ -610,22 +610,22 @@ git push -u origin main</code></pre>
     <span class="hl-yaml-key">steps</span>:
       <span class="hl-comment"># 1. Récupère le code source du dépôt</span>
       - <span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">Checkout repository</span>
-        <span class="hl-yaml-key">uses</span>: <span class="hl-yaml-val">actions/checkout@v4</span>
+        <span class="hl-yaml-key">uses</span>: <span class="hl-yaml-val">actions/checkout@v6</span>
 
       <span class="hl-comment"># 2. Configure l'environnement GitHub Pages</span>
       - <span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">Setup Pages</span>
-        <span class="hl-yaml-key">uses</span>: <span class="hl-yaml-val">actions/configure-pages@v4</span>
+        <span class="hl-yaml-key">uses</span>: <span class="hl-yaml-val">actions/configure-pages@v6</span>
 
       <span class="hl-comment"># 3. Empaquette tous les fichiers du site en un artifact</span>
       - <span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">Upload artifact</span>
-        <span class="hl-yaml-key">uses</span>: <span class="hl-yaml-val">actions/upload-pages-artifact@v3</span>
+        <span class="hl-yaml-key">uses</span>: <span class="hl-yaml-val">actions/upload-pages-artifact@v5</span>
         <span class="hl-yaml-key">with</span>:
           <span class="hl-yaml-key">path</span>: <span class="hl-yaml-val">'.'</span>
 
       <span class="hl-comment"># 4. Déploie l'artifact sur GitHub Pages</span>
       - <span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">Deploy to GitHub Pages</span>
         <span class="hl-yaml-key">id</span>: <span class="hl-yaml-val">deployment</span>
-        <span class="hl-yaml-key">uses</span>: <span class="hl-yaml-val">actions/deploy-pages@v4</span></code></pre>
+        <span class="hl-yaml-key">uses</span>: <span class="hl-yaml-val">actions/deploy-pages@v5</span></code></pre>
           </div>
 
           <p id="copy-feedback" class="copy-feedback" aria-live="polite"></p>
@@ -633,13 +633,13 @@ git push -u origin main</code></pre>
           <div class="info-box info-box--tip">
             <h4>🔍 Que fait chaque action&nbsp;?</h4>
             <ul>
-              <li><strong><code>actions/checkout@v4</code></strong> — Clone le dépôt sur le runner
+              <li><strong><code>actions/checkout@v6</code></strong> — Clone le dépôt sur le runner
                 (comme un <code>git clone</code>).</li>
-              <li><strong><code>actions/configure-pages@v4</code></strong> — Détecte la configuration
+              <li><strong><code>actions/configure-pages@v6</code></strong> — Détecte la configuration
                 Pages du dépôt et prépare le runner.</li>
-              <li><strong><code>actions/upload-pages-artifact@v3</code></strong> — Compresse le
+              <li><strong><code>actions/upload-pages-artifact@v5</code></strong> — Compresse le
                 dossier spécifié (<code>path: '.'</code>) en un artifact uploadé sur GitHub.</li>
-              <li><strong><code>actions/deploy-pages@v4</code></strong> — Prend l'artifact et le
+              <li><strong><code>actions/deploy-pages@v5</code></strong> — Prend l'artifact et le
                 publie sur l'infrastructure GitHub Pages (CDN mondiale).</li>
             </ul>
           </div>
