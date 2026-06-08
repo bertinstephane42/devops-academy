@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  DevOps Academy – Application Pédagogique SPA
+  ----------------------------------------------------------------------------
+  Pour activer GitHub Pages et mettre ce site en ligne :
+  1. Poussez ce dossier sur un dépôt GitHub (public ou privé).
+  2. Allez dans Settings > Pages.
+  3. Source : "Deploy from a branch".
+  4. Branche : "main" (ou "master") / dossier : "/ (root)".
+  5. Cliquez sur "Save".
+  6. GitHub fournit une URL du type : https://<votre-utilisateur>.github.io/<nom-du-repo>/
+  Le site est mis en ligne en quelques secondes (après le premier run de l'Action
+  "pages build and deployment" automatique de GitHub).
+  ============================================================================
+-->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Application pédagogique sur les concepts DevOps pour étudiants en Master">
+  <title>DevOps Academy – Master</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ===== EN-TÊTE ===== -->
+  <header class="header">
+    <div class="container header__inner">
+      <h1 class="header__logo">DevOps Academy</h1>
+      <p class="header__subtitle">Master – CI/CD &amp; Culture DevOps</p>
+    </div>
+  </header>
+
+  <!-- ===== NAVIGATION PAR ONGLETS ===== -->
+  <nav class="tabs-nav" aria-label="Navigation principale">
+    <div class="container">
+      <ul class="tabs-nav__list" role="tablist">
+        <li role="none">
+          <button id="tab-btn-0" class="tabs-nav__btn tabs-nav__btn--active" role="tab"
+                  aria-selected="true" aria-controls="panel-0" data-tab="0">
+            Accueil
+          </button>
+        </li>
+        <li role="none">
+          <button id="tab-btn-1" class="tabs-nav__btn" role="tab"
+                  aria-selected="false" aria-controls="panel-1" data-tab="1">
+            Planification
+          </button>
+        </li>
+        <li role="none">
+          <button id="tab-btn-2" class="tabs-nav__btn" role="tab"
+                  aria-selected="false" aria-controls="panel-2" data-tab="2">
+            Développement
+          </button>
+        </li>
+        <li role="none">
+          <button id="tab-btn-3" class="tabs-nav__btn" role="tab"
+                  aria-selected="false" aria-controls="panel-3" data-tab="3">
+            Intégration Continue
+          </button>
+        </li>
+        <li role="none">
+          <button id="tab-btn-4" class="tabs-nav__btn" role="tab"
+                  aria-selected="false" aria-controls="panel-4" data-tab="4">
+            Déploiement Continu
+          </button>
+        </li>
+        <li role="none">
+          <button id="tab-btn-5" class="tabs-nav__btn" role="tab"
+                  aria-selected="false" aria-controls="panel-5" data-tab="5">
+            Monitoring
+          </button>
+        </li>
+        <li role="none">
+          <button id="tab-btn-6" class="tabs-nav__btn tabs-nav__btn--highlight" role="tab"
+                  aria-selected="false" aria-controls="panel-6" data-tab="6">
+            GitHub &amp; CI/CD
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== CONTENU PRINCIPAL ===== -->
+  <main class="main-content">
+
+    <!-- Onglet 0 – Accueil -->
+    <section id="panel-0" class="tab-panel tab-panel--active" role="tabpanel"
+             aria-labelledby="tab-btn-0">
+      <div class="container">
+        <h2>Bienvenue dans l'univers DevOps</h2>
+        <p class="lead">
+          Le <strong>DevOps</strong> est bien plus qu'un ensemble d'outils&nbsp;: c'est une
+          <strong>culture</strong> qui rapproche les équipes de développement (Dev) et
+          d'exploitation (Ops) pour livrer des logiciels de qualité plus rapidement et de
+          manière plus fiable.
+        </p>
+
+        <div class="card-grid">
+          <article class="card">
+            <div class="card__icon">🤝</div>
+            <h3>Collaboration</h3>
+            <p>Fin des silos entre Dev et Ops. Les équipes partagent la responsabilité du
+               cycle de vie complet de l'application.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon">⚡</div>
+            <h3>Automatisation</h3>
+            <p>Build, test, déploiement&nbsp;: tout ce qui peut être automatisé doit l'être,
+               afin d'éliminer les erreurs manuelles et accélérer les livraisons.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon">📊</div>
+            <h3>Mesure</h3>
+            <p>Des métriques précises (MTTR, déploiements par jour, taux d'échec) guident
+               l'amélioration continue.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon">🔄</div>
+            <h3>Amélioration Continue</h3>
+            <p>Chaque incident est une opportunité d'apprentissage. Les processus évoluent
+               par rétroaction constante.</p>
+          </article>
+        </div>
+
+        <div class="info-box">
+          <h3>Bénéfices pour l'entreprise</h3>
+          <ul>
+            <li><strong>Réduction du Time-to-Market</strong> – livraisons plus fréquentes et plus sûres.</li>
+            <li><strong>Qualité logicielle accrue</strong> – tests automatisés et intégration continue.</li>
+            <li><strong>Meilleure résilience</strong> – déploiements progressifs, rollbacks rapides.</li>
+            <li><strong>Satisfaction clients</strong> – fonctionnalités livrées en continu, feedback immédiat.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Onglet 1 – Planification -->
+    <section id="panel-1" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-1">
+      <div class="container">
+        <h2>Planification <span class="badge">Plan</span></h2>
+        <p class="lead">
+          La planification DevOps s'appuie sur les principes <strong>Agile</strong> et
+          <strong>Lean</strong> pour prioriser le travail, gérer les dépendances et suivre
+          l'avancement en temps réel.
+        </p>
+
+        <div class="two-col">
+          <div>
+            <h3>Méthodes Agiles</h3>
+            <ul class="check-list">
+              <li><strong>Scrum</strong> – Sprints (1–4 semaines), daily stand-ups, rétrospectives.</li>
+              <li><strong>Kanban</strong> – Flux continu, limite du travail en cours (WIP), visibilité&nbsp;totale.</li>
+              <li><strong>SAFe</strong> – Mise à l'échelle Agile pour les grandes organisations.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Outils de suivi</h3>
+            <ul class="check-list">
+              <li><strong>GitHub Issues / Projects</strong> – Tableaux Kanban intégrés au code.</li>
+              <li><strong>Jira</strong> – Roadmaps, epic, user stories, backlog.</li>
+              <li><strong>Confluence</strong> – Documentation collaborative des décisions.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h4>📌 Le saviez-vous&nbsp;?</h4>
+          <p>
+            Les équipes DevOps matures utilisent des <em>«&nbsp;Service Level Objectives&nbsp;»</em>
+            (SLO) pour définir des objectifs de fiabilité dès la phase de planification.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Onglet 2 – Développement -->
+    <section id="panel-2" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-2">
+      <div class="container">
+        <h2>Développement <span class="badge">Code</span></h2>
+        <p class="lead">
+          Le code est le cœur du logiciel. Une gestion rigoureuse des versions et des
+          processus de <em>code review</em> est indispensable.
+        </p>
+
+        <div class="two-col">
+          <div>
+            <h3>Git &amp; Stratégies de branching</h3>
+            <ul class="check-list">
+              <li><strong>Git Flow</strong> – Branches <code>main</code>, <code>develop</code>,
+                <code>feature/*</code>, <code>release/*</code>, <code>hotfix/*</code>.</li>
+              <li><strong>Trunk-based</strong> – Branches courtes, intégration multiple fois par jour.</li>
+              <li><strong>GitHub Flow</strong> – <code>main</code> + branches de fonctionnalités, PR obligatoire.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Bonnes pratiques</h3>
+            <ul class="check-list">
+              <li>Commits atomiques et messages explicites (conventional commits).</li>
+              <li><em>Code review</em> systématique via Pull Request.</li>
+              <li>Protection de branche avec – vérifications obligatoires avant merge.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="code-sample">
+          <div class="code-sample__header">
+            <span>Exemple de conventional commit</span>
+          </div>
+          <pre><code>feat(api): ajouter le endpoint de création d'utilisateur
+fix(auth): corriger le token expiré en session
+docs(readme): mettre à jour les instructions d'installation</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Onglet 3 – Intégration Continue -->
+    <section id="panel-3" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-3">
+      <div class="container">
+        <h2>Intégration Continue <span class="badge">Build &amp; Test</span></h2>
+        <p class="lead">
+          L'<strong>Intégration Continue (CI)</strong> consiste à fusionner le travail des
+          développeurs plusieurs fois par jour et à valider chaque changement par des
+          tests automatisés.
+        </p>
+
+        <div class="card-grid">
+          <article class="card card--compact">
+            <h3>🔍 Build automatisé</h3>
+            <p>Compilation, résolution des dépendances, analyse statique (linting).</p>
+          </article>
+          <article class="card card--compact">
+            <h3>✅ Tests unitaires</h3>
+            <p>Valident chaque fonction individuellement. Exécutés à chaque commit.</p>
+          </article>
+          <article class="card card--compact">
+            <h3>🧪 Tests d'intégration</h3>
+            <p>Vérifient les interactions entre composants (API, base de données).</p>
+          </article>
+          <article class="card card--compact">
+            <h3>📈 Qualité du code</h3>
+            <p>SonarQube, CodeQL, couverture de code – seuils de qualité bloquants.</p>
+          </article>
+        </div>
+
+        <div class="info-box">
+          <h4>Pratique recommandée</h4>
+          <p>
+            Chaque Pull Request doit passer une pipeline CI complète avant d'être mergée.
+            La branche <code>main</code> doit toujours être déployable.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Onglet 4 – Déploiement Continu -->
+    <section id="panel-4" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-4">
+      <div class="container">
+        <h2>Déploiement Continu <span class="badge">Release &amp; Deploy</span></h2>
+        <p class="lead">
+          Le <strong>Continuous Deployment (CD)</strong> automatise la mise en production
+          de chaque changement validé par la CI, sans intervention manuelle.
+        </p>
+
+        <h3>Stratégies de déploiement</h3>
+        <div class="card-grid">
+          <article class="card card--compact">
+            <h3>🟢 Blue/Green</h3>
+            <p>Deux environnements identiques. Bascule instantanée du trafic de Blue (actuel)
+               vers Green (nouveau). Rollback immédiat.</p>
+          </article>
+          <article class="card card--compact">
+            <h3>🐤 Canary</h3>
+            <p>Nouvelle version déployée pour un faible % d'utilisateurs. Surveillance
+               avant extension progressive.</p>
+          </article>
+          <article class="card card--compact">
+            <h3>🌊 Rolling update</h3>
+            <p>Remplacement progressif des instances une par une (ou par lots). Aucun
+               temps d'arrêt.</p>
+          </article>
+          <article class="card card--compact">
+            <h3>🐳 Conteneurisation</h3>
+            <p>Docker empaquette l'application et ses dépendances. Image immuable,
+               identique en dev, test et prod.</p>
+          </article>
+        </div>
+
+        <div class="code-sample">
+          <div class="code-sample__header">
+            <span>Exemple Dockerfile</span>
+          </div>
+          <pre><code>FROM node:20-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 80</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Onglet 5 – Monitoring -->
+    <section id="panel-5" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-5">
+      <div class="container">
+        <h2>Monitoring &amp; Feedback <span class="badge">Observabilité</span></h2>
+        <p class="lead">
+          L'observabilité repose sur <strong>trois piliers</strong>&nbsp;: logs, métriques
+          et traces. Elle permet de comprendre l'état interne d'un système en production.
+        </p>
+
+        <div class="two-col">
+          <div>
+            <h3>📜 Logs</h3>
+            <p>Événements textuels horodatés. Outils&nbsp;: ELK Stack (Elasticsearch,
+               Logstash, Kibana), Loki, CloudWatch.</p>
+            <h3>📊 Métriques</h3>
+            <p>Données numériques agrégées (CPU, mémoire, requêtes/s). Outils&nbsp;:
+               Prometheus, Grafana, Datadog.</p>
+          </div>
+          <div>
+            <h3>🔗 Tracing</h3>
+            <p>Suivi d'une requête à travers tous les services (APM). Outils&nbsp;:
+               Jaeger, OpenTelemetry, New Relic.</p>
+            <h3>🔄 Boucle de rétroaction</h3>
+            <p>Les alertes remontent aux équipes Dev via Slack/PagerDuty. Les post-mortems
+               alimentent le backlog d'amélioration.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Onglet 6 – GitHub & CI/CD (INTERACTIF) -->
+    <section id="panel-6" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-6">
+      <div class="container">
+        <h2>GitHub &amp; CI/CD <span class="badge">🔧 Démo</span></h2>
+        <p class="lead">
+          Ce projet est conçu pour être déployé avec <strong>GitHub Actions</strong> sur
+          <strong>GitHub Pages</strong>. Suivez le guide ci-dessous.
+        </p>
+
+        <!-- Guide pas à pas -->
+        <div class="steps-guide" id="guide-steps">
+          <h3>📋 Guide pas à pas</h3>
+
+          <div class="step" data-step="1">
+            <span class="step__badge">1</span>
+            <div>
+              <strong>Créez un dépôt GitHub</strong>
+              <p>Poussez ce projet sur un dépôt public nommé <code>devops-academy</code>.</p>
+            </div>
+          </div>
+
+          <div class="step" data-step="2">
+            <span class="step__badge">2</span>
+            <div>
+              <strong>Activez GitHub Pages</strong>
+              <p>Settings → Pages → Source: <em>Deploy from a branch</em> → branche <code>main</code>,
+               dossier <code>/ (root)</code> → Save.</p>
+            </div>
+          </div>
+
+          <div class="step" data-step="3">
+            <span class="step__badge">3</span>
+            <div>
+              <strong>Ajoutez le workflow CI/CD</strong>
+              <p>Créez le fichier <code>.github/workflows/deploy.yml</code> (contenu ci-dessous).</p>
+            </div>
+          </div>
+
+          <div class="step" data-step="4">
+            <span class="step__badge">4</span>
+            <div>
+              <strong>Poussez et vérifiez</strong>
+              <p>Après un <code>git push</code>, allez dans l'onglet Actions de votre dépôt
+               pour voir la pipeline s'exécuter.</p>
+            </div>
+          </div>
+
+          <div class="step" data-step="5">
+            <span class="step__badge">5</span>
+            <div>
+              <strong>Accédez au site</strong>
+              <p>L'URL sera <code>https://&lt;utilisateur&gt;.github.io/devops-academy/</code>.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zone de code avec syntax highlighting simulé -->
+        <h3>📄 Fichier de workflow GitHub Actions</h3>
+        <p>Créez <code>.github/workflows/deploy.yml</code> à la racine du dépôt&nbsp;:</p>
+
+        <div class="code-sample code-sample--interactive" id="workflow-sample">
+          <div class="code-sample__header">
+            <span>.github/workflows/deploy.yml</span>
+            <button class="btn-copy" id="btn-copy" aria-label="Copier le code">
+              📋 Copier
+            </button>
+          </div>
+          <pre><code id="workflow-code"><span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">Deploy to GitHub Pages</span>
+
+<span class="hl-yaml-key">on</span>:
+  <span class="hl-yaml-key">push</span>:
+    <span class="hl-yaml-key">branches</span>:
+      - <span class="hl-yaml-val">main</span>
+
+<span class="hl-yaml-key">jobs</span>:
+  <span class="hl-yaml-key">deploy</span>:
+    <span class="hl-yaml-key">runs-on</span>: <span class="hl-yaml-val">ubuntu-latest</span>
+
+    <span class="hl-yaml-key">permissions</span>:
+      <span class="hl-yaml-key">contents</span>: <span class="hl-yaml-val">read</span>
+      <span class="hl-yaml-key">pages</span>: <span class="hl-yaml-val">write</span>
+      <span class="hl-yaml-key">id-token</span>: <span class="hl-yaml-val">write</span>
+
+    <span class="hl-yaml-key">environment</span>:
+      <span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">github-pages</span>
+      <span class="hl-yaml-key">url</span>: <span class="hl-yaml-val">${{ steps.deployment.outputs.page_url }}</span>
+
+    <span class="hl-yaml-key">steps</span>:
+      - <span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">Checkout repository</span>
+        <span class="hl-yaml-key">uses</span>: <span class="hl-yaml-val">actions/checkout@v4</span>
+
+      - <span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">Setup Pages</span>
+        <span class="hl-yaml-key">uses</span>: <span class="hl-yaml-val">actions/configure-pages@v4</span>
+
+      - <span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">Upload artifact</span>
+        <span class="hl-yaml-key">uses</span>: <span class="hl-yaml-val">actions/upload-pages-artifact@v3</span>
+        <span class="hl-yaml-key">with</span>:
+          <span class="hl-yaml-key">path</span>: <span class="hl-yaml-val">'.'</span>
+
+      - <span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">Deploy to GitHub Pages</span>
+        <span class="hl-yaml-key">id</span>: <span class="hl-yaml-val">deployment</span>
+        <span class="hl-yaml-key">uses</span>: <span class="hl-yaml-val">actions/deploy-pages@v4</span></code></pre>
+        </div>
+
+        <p id="copy-feedback" class="copy-feedback" aria-live="polite"></p>
+
+        <!-- Bouton de démo -->
+        <div class="demo-action">
+          <h3>🔄 Simuler un déclenchement CI/CD</h3>
+          <p>Cliquez sur le bouton ci-dessous pour simuler un push sur <code>main</code> et
+             voir la pipeline s'exécuter (animation).</p>
+          <button class="btn-demo" id="btn-demo-push">🚀 Simuler un push</button>
+          <div class="pipeline-visual" id="pipeline-visual" aria-hidden="true">
+            <div class="pipeline-step" data-status="pending">
+              <span class="pipeline-step__icon">⏳</span>
+              Checkout
+            </div>
+            <div class="pipeline-step" data-status="pending">
+              <span class="pipeline-step__icon">⏳</span>
+              Setup Pages
+            </div>
+            <div class="pipeline-step" data-status="pending">
+              <span class="pipeline-step__icon">⏳</span>
+              Upload artifact
+            </div>
+            <div class="pipeline-step" data-status="pending">
+              <span class="pipeline-step__icon">⏳</span>
+              Deploy
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== PIED DE PAGE ===== -->
+  <footer class="footer">
+    <div class="container">
+      <p>
+        DevOps Academy – Projet pédagogique Master &mdash;
+        Hébergé sur <a href="https://pages.github.com" target="_blank" rel="noopener noreferrer">GitHub Pages</a>
+      </p>
+      <p class="footer__small">
+        Déployé via GitHub Actions &bull; Dernière mise à jour : 2026
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
