@@ -78,6 +78,18 @@
             GitHub &amp; CI/CD
           </button>
         </li>
+        <li role="none">
+          <button id="tab-btn-7" class="tabs-nav__btn" role="tab"
+                  aria-selected="false" aria-controls="panel-7" data-tab="7">
+            Infrastructure as Code
+          </button>
+        </li>
+        <li role="none">
+          <button id="tab-btn-8" class="tabs-nav__btn" role="tab"
+                  aria-selected="false" aria-controls="panel-8" data-tab="8">
+            Kubernetes
+          </button>
+        </li>
       </ul>
     </div>
   </nav>
@@ -1872,6 +1884,497 @@ git push</code></pre>
                 </ul>
               </div>
             </details>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Onglet 7 – Infrastructure as Code -->
+    <section id="panel-7" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-7">
+      <div class="container">
+        <h2>Infrastructure as Code <span class="badge">Terraform &amp; Co.</span></h2>
+        <p class="lead">
+          L'<strong>Infrastructure as Code (IaC)</strong> consiste à gérer et provisionner
+          l'infrastructure (serveurs, réseaux, bases de données) via du code déclaratif ou
+          impératif, plutôt que par des actions manuelles ou des scripts ponctuels.
+        </p>
+
+        <div class="two-col">
+          <div>
+            <h3>Déclaratif vs Impératif</h3>
+            <ul class="check-list">
+              <li><strong>Impératif</strong> — on décrit <em>comment</em> faire (Ansible, Bash, CloudFormation en mode script). Ordre des opérations explicite.</li>
+              <li><strong>Déclaratif</strong> — on décrit <em>quoi</em> (Terraform, Pulumi, CloudFormation en mode infrastructure). L'outil calcule le plan d'exécution.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Principes clés</h3>
+            <ul class="check-list">
+              <li><strong>Idempotence</strong> — appliquer deux fois le même code produit le même état final.</li>
+              <li><strong>Versionné</strong> — le code IaC suit Git, revue de code possible.</li>
+              <li><strong>Reproductible</strong> — recréer un environnement identique en un clic.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="code-sample">
+          <div class="code-sample__header">
+            <span>Exemple Terraform — AWS EC2</span>
+          </div>
+          <pre><code>terraform {
+  required_providers {
+    aws = { source = "hashicorp/aws", version = "~> 5.0" }
+  }
+}
+
+provider "aws" {
+  region = "eu-west-3"
+}
+
+resource "aws_instance" "app" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+
+  tags = { Name = "devops-app" }
+}</code></pre>
+        </div>
+
+        <div class="info-box">
+          <h4>IaC dans le pipeline DevOps</h4>
+          <p>
+            Le code Terraform est intégré dans la CI/CD : <code>terraform plan</code> dans la PR,
+            <code>terraform apply</code> automatique après merge sur <code>main</code>.
+            L'état (state) est stocké dans un backend distant (S3, Terraform Cloud) pour
+            le partage en équipe.
+          </p>
+        </div>
+
+        <!-- ===== CONTENU PÉDAGOGIQUE SUPPLÉMENTAIRE ===== -->
+
+        <div class="guide-section">
+          <h3>📖 Les concepts en détail</h3>
+          <p>
+            Avant l'IaC, l'infrastructure était configurée manuellement via SSH ou des
+            interfaces web (console AWS, vSphere). Résultat&nbsp;: <strong>config drift</strong>,
+            serveurs «&nbsp;snowflake&nbsp;» (chacun unique, impossible à reproduire), et
+            changements non documentés.
+          </p>
+          <p>
+            L'IaC résout cela avec quatre piliers&nbsp;:
+          </p>
+          <ul>
+            <li><strong>Déclaratif</strong>&nbsp;: vous décrivez l'état désiré, l'outil calcule
+              le plan pour y parvenir. Exemple&nbsp;: Terraform lit le state existant, le
+              compare à votre configuration, et génère un plan (<code>terraform plan</code>).</li>
+            <li><strong>Idempotence</strong>&nbsp;: exécuter plusieurs fois le même code produit
+              le même résultat. Si la ressource existe déjà, Terraform ne fait rien.</li>
+            <li><strong>Push vs Pull</strong>&nbsp;: Ansible (push) se connecte aux machines
+              et exécute des modules. Terraform (pull) interroge l'API du cloud et applique
+              les différences. Chef/Puppet (pull) utilisent un agent sur chaque machine.</li>
+            <li><strong>State management</strong>&nbsp;: l'état réel de l'infrastructure est
+              stocké dans un fichier state. En équipe, il doit être partagé via un backend
+              distant (S3, Azure Storage, Terraform Cloud) avec verrouillage (state lock).</li>
+          </ul>
+        </div>
+
+        <div class="guide-section">
+          <h3>⚠️ Pièges à éviter</h3>
+          <div class="troubleshooting">
+            <details class="troubleshooting__item">
+              <summary class="troubleshooting__question">State Lock oublié → corruption du state</summary>
+              <div class="troubleshooting__answer">
+                Sans verrouillage, deux membres d'équipe peuvent appliquer simultanément,
+                ce qui corrompt le fichier state. Utilisez un backend distant avec locking
+                (DynamoDB pour S3, Terraform Cloud).
+              </div>
+            </details>
+            <details class="troubleshooting__item">
+              <summary class="troubleshooting__question">Drift de configuration non détecté</summary>
+              <div class="troubleshooting__answer">
+                Une modification manuelle dans la console AWS désynchronise le state du réel.
+                <code>terraform plan</code> détecte le drift. Automatisez son exécution
+                régulière dans une pipeline CI.
+              </div>
+            </details>
+            <details class="troubleshooting__item">
+              <summary class="troubleshooting__question">Secrets en clair dans les fichiers .tf</summary>
+              <div class="troubleshooting__answer">
+                Un mot de passe commité dans le dépôt est exposé à toute l'équipe et dans
+                l'historique Git. Utilisez <strong>variables</strong> + <strong>fichiers
+                .tfvars</strong> non commités, ou un gestionnaire de secrets (Vault,
+                AWS Secrets Manager).
+              </div>
+            </details>
+            <details class="troubleshooting__item">
+              <summary class="troubleshooting__question">Modules non versionnés → régression</summary>
+              <div class="troubleshooting__answer">
+                Un module Terraform qui change sans versionnement peut casser l'infrastructure
+                du jour au lendemain. Référencez toujours une version (<code>version = "~> 1.2"</code>)
+                pour les modules du registry.
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="guide-section">
+          <h3>📚 Lexique</h3>
+          <div class="glossary-grid">
+            <div class="glossary-item">
+              <span class="glossary-term">Terraform</span>
+              <span class="glossary-def">Outil d'IaC déclaratif développé par HashiCorp, qui
+                provisionne des ressources via des providers (AWS, Azure, GCP, etc.).</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">State</span>
+              <span class="glossary-def">Fichier JSON qui fait le lien entre la configuration
+                déclarative et l'infrastructure réelle. Stocke l'état de chaque ressource.</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Provider</span>
+              <span class="glossary-def">Plugin Terraform qui expose les ressources d'une
+                API (AWS, Azure, GCP, Kubernetes, etc.).</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Resource</span>
+              <span class="glossary-def">Élément d'infrastructure géré par Terraform
+                (ex&nbsp;: <code>aws_instance</code>, <code>aws_s3_bucket</code>).</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Module</span>
+              <span class="glossary-def">Ensemble de ressources Terraform regroupées et
+                paramétrables, réutilisable dans plusieurs projets.</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Ansible Playbook</span>
+              <span class="glossary-def">Fichier YAML décrivant une séquence de tâches
+                impératives à exécuter sur des hôtes distants (push).</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Idempotence</span>
+              <span class="glossary-def">Propriété d'une opération : l'appliquer plusieurs
+                fois produit le même résultat que l'appliquer une seule fois.</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Config Drift</span>
+              <span class="glossary-def">Écart entre l'état réel de l'infrastructure et
+                l'état défini dans le code IaC, souvent causé par des modifications manuelles.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-section">
+          <h3>💡 Exemple concret</h3>
+          <div class="card">
+            <p><strong>Scénario</strong>&nbsp;: L'équipe Ops provisionne un environnement de
+              staging avec Terraform sur AWS.</p>
+            <ol class="numbered-list">
+              <li>Le code Terraform est organisé en modules&nbsp;: <code>vpc</code>,
+                <code>ec2</code>, <code>rds</code>, <code>alb</code>. Chaque module a ses
+                propres variables et outputs.</li>
+              <li>Le backend S3 + DynamoDB stocke le state avec verrouillage. Les fichiers
+                <code>.tfvars</code> sont différents par environnement (dev, staging, prod).</li>
+              <li>À chaque PR modifiant le dossier <code>terraform/</code>, une pipeline CI
+                exécute <code>terraform fmt -check</code>, <code>tflint</code> et
+                <code>terraform plan</code>. Le plan est commenté dans la PR.</li>
+              <li>Après merge sur <code>main</code>, une pipeline CD exécute
+                <code>terraform apply -auto-approve</code> pour déployer le changement.</li>
+              <li>Un pipeline hebdomadaire exécute <code>terraform plan</code> pour détecter
+                le drift et notifie l'équipe si une différence est trouvée.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="guide-section">
+          <h3>🧠 Quiz express</h3>
+          <div class="quiz">
+            <div class="quiz__question">
+              <p class="quiz__text">1. Quel est le rôle du fichier <code>terraform state</code> ?</p>
+              <ul class="quiz__options">
+                <li class="quiz__option" data-correct="false">Stocker les logs d'exécution</li>
+                <li class="quiz__option" data-correct="true">Faire le lien entre la configuration déclarative et l'infrastructure réelle</li>
+                <li class="quiz__option" data-correct="false">Authentifier l'utilisateur auprès du cloud</li>
+                <li class="quiz__option" data-correct="false">Générer la documentation du projet</li>
+              </ul>
+              <p class="quiz__feedback">Le state Terraform est un fichier JSON qui mappe chaque
+                ressource déclarée dans le code à son identifiant réel dans le cloud. Il est
+                essentiel pour détecter les différences et planifier les modifications.</p>
+            </div>
+            <div class="quiz__question">
+              <p class="quiz__text">2. Que signifie «&nbsp;idempotence&nbsp;» dans le contexte de l'IaC ?</p>
+              <ul class="quiz__options">
+                <li class="quiz__option" data-correct="false">Exécuter le code une seule fois</li>
+                <li class="quiz__option" data-correct="true">Appliquer plusieurs fois le même code produit le même état final</li>
+                <li class="quiz__option" data-correct="false">Le code s'exécute plus vite à chaque fois</li>
+                <li class="quiz__option" data-correct="false">Supprimer l'infrastructure après exécution</li>
+              </ul>
+              <p class="quiz__feedback">Idempotence = si la ressource existe déjà et est
+                conforme, rien ne change. C'est ce qui permet de réexécuter un playbook ou
+                un <code>terraform apply</code> sans risque de dupliquer les ressources.</p>
+            </div>
+            <div class="quiz__question">
+              <p class="quiz__text">3. Quelle est la différence entre Ansible (push) et Terraform (pull) ?</p>
+              <ul class="quiz__options">
+                <li class="quiz__option" data-correct="false">Ansible est plus rapide</li>
+                <li class="quiz__option" data-correct="false">Terraform ne fonctionne que sur AWS</li>
+                <li class="quiz__option" data-correct="true">Ansible se connecte aux machines (push), Terraform interroge l'API du cloud (pull)</li>
+                <li class="quiz__option" data-correct="false">Il n'y a pas de différence</li>
+              </ul>
+              <p class="quiz__feedback">Ansible pousse la configuration vers les machines via
+                SSH. Terraform interroge l'API du fournisseur cloud, compare avec le state,
+                et applique les différences. Le pull est plus adapté à l'infrastructure
+                cloud, le push à la configuration des OS.</p>
+            </div>
+            <p class="quiz__result"></p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Onglet 8 – Kubernetes -->
+    <section id="panel-8" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-8">
+      <div class="container">
+        <h2>Kubernetes <span class="badge">K8s &amp; Docker</span></h2>
+        <p class="lead">
+          <strong>Kubernetes (K8s)</strong> est un orchestrateur de conteneurs open-source
+          qui automatise le déploiement, le scaling et la gestion d'applications conteneurisées.
+          C'est le standard de facto de l'industrie pour les architectures microservices.
+        </p>
+
+        <div class="card-grid">
+          <article class="card card--compact">
+            <h3>📦 Pod</h3>
+            <p>Plus petite unité déployable. Un ou plusieurs conteneurs partageant le même réseau et stockage.</p>
+          </article>
+          <article class="card card--compact">
+            <h3>🔄 Deployment</h3>
+            <p>Garantit un nombre de réplicas, gère les rolling updates et les rollbacks.</p>
+          </article>
+          <article class="card card--compact">
+            <h3>🌐 Service</h3>
+            <p>Point d'entrée réseau stable vers un ensemble de Pods. Load-balancing intégré.</p>
+          </article>
+          <article class="card card--compact">
+            <h3>🚪 Ingress</h3>
+            <p>Routage HTTP/HTTPS externe vers les Services. TLS, virtual hosting, rules.</p>
+          </article>
+        </div>
+
+        <div class="code-sample">
+          <div class="code-sample__header">
+            <span>Exemple de déploiement — API Node.js</span>
+          </div>
+          <pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: registry.example.com/api:v1.2.3
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: 200m
+            requests:
+              memory: 128Mi
+              cpu: 100m
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000</code></pre>
+        </div>
+
+        <!-- ===== CONTENU PÉDAGOGIQUE SUPPLÉMENTAIRE ===== -->
+
+        <div class="guide-section">
+          <h3>📖 Les concepts en détail</h3>
+          <p>
+            Kubernete s'est imposé car il résout des problèmes concrets de la
+            conteneurisation à grande échelle&nbsp;:
+          </p>
+          <ul>
+            <li><strong>Auto-healing</strong>&nbsp;: si un Pod crash, le contrôleur en recrée
+              un automatiquement pour respecter le nombre de réplicas défini.</li>
+            <li><strong>Scaling</strong>&nbsp;: horizontal (plus de Pods) ou vertical (plus de
+              ressources). Le <strong>Horizontal Pod Autoscaler (HPA)</strong> ajuste le nombre
+              de réplicas selon la charge CPU/mémoire ou des métriques custom.</li>
+            <li><strong>Rolling update</strong>&nbsp;: mise à jour progressive des Pods sans
+              temps d'arrêt. En cas d'échec, <code>kubectl rollout undo</code> annule la mise
+              à jour.</li>
+            <li><strong>Configuration &amp; Secrets</strong>&nbsp;: les <strong>ConfigMaps</strong>
+              stockent la configuration non sensible (variables d'env, fichiers), les
+              <strong>Secrets</strong> stockent les données sensibles (clés, tokens).</li>
+            <li><strong>Stockage</strong>&nbsp;: les <strong>PersistentVolumes (PV)</strong>
+              et <strong>PersistentVolumeClaims (PVC)</strong> abstraient le stockage physique
+              (EBS, NFS, GCE PD) pour les applications stateful (bases de données).</li>
+            <li><strong>Helm</strong>&nbsp;: gestionnaire de paquets K8s. Un <strong>chart</strong>
+              Helm empaquette tous les manifests YAML d'une application avec des templates
+              paramétrables.</li>
+          </ul>
+        </div>
+
+        <div class="guide-section">
+          <h3>⚠️ Pièges à éviter</h3>
+          <div class="troubleshooting">
+            <details class="troubleshooting__item">
+              <summary class="troubleshooting__question">Absence de resource limits → un Pod tue le Node</summary>
+              <div class="troubleshooting__answer">
+                Sans <code>resources.limits</code>, un Pod peut consommer toute la mémoire
+                du Node et faire planter les autres Pods. Définissez toujours des requests
+                et limits pour CPU et mémoire.
+              </div>
+            </details>
+            <details class="troubleshooting__item">
+              <summary class="troubleshooting__question">Image tag :latest → déploiement non reproductible</summary>
+              <div class="troubleshooting__answer">
+                <code>image: myapp:latest</code> change à chaque build. On ne peut pas savoir
+                quelle version tourne, ni revenir en arrière. Utilisez un tag sémantique
+                (<code>v1.2.3</code>) ou le hash du commit.
+              </div>
+            </details>
+            <details class="troubleshooting__item">
+              <summary class="troubleshooting__question">RBAC trop permissif → risque de sécurité</summary>
+              <div class="troubleshooting__answer">
+                Un ServiceAccount avec des droits admin octroie un accès total au cluster.
+                Appliquez le <strong>principe du moindre privilège</strong> avec des Roles
+                et RoleBindings spécifiques par namespace.
+              </div>
+            </details>
+            <details class="troubleshooting__item">
+              <summary class="troubleshooting__question">ConfigMap modifiée → Pod non rechargé</summary>
+              <div class="troubleshooting__answer">
+                Modifier une ConfigMap ne redémarre pas automatiquement les Pods. Utilisez
+                un outil comme <strong>Reloader</strong> ou montez la ConfigMap en volume
+                pour un rechargement à chaud.
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <div class="guide-section">
+          <h3>📚 Lexique</h3>
+          <div class="glossary-grid">
+            <div class="glossary-item">
+              <span class="glossary-term">Pod</span>
+              <span class="glossary-def">Plus petite unité déployable dans K8s. Un ou plusieurs
+                conteneurs partageant le même réseau, IP et volumes.</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Deployment</span>
+              <span class="glossary-def">Ressource qui gère un ensemble de réplicas de Pods
+                avec rolling update, rollback et scaling déclaratif.</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Service</span>
+              <span class="glossary-def">Abstraction réseau qui expose un ensemble de Pods
+                via une IP stable et un nom DNS, avec load-balancing intégré.</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Ingress</span>
+              <span class="glossary-def">Ressource qui expose des Services HTTP/HTTPS vers
+                l'extérieur avec routage par hostname ou chemin, et terminaison TLS.</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">ConfigMap</span>
+              <span class="glossary-def">Ressource qui stocke des données de configuration
+                non sensibles (variables d'environnement, fichiers) injectables dans les Pods.</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Secret</span>
+              <span class="glossary-def">Ressource qui stocke des données sensibles (clés API,
+                mots de passe) encodées en base64, avec chiffrement au repos possible.</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Helm</span>
+              <span class="glossary-def">Gestionnaire de paquets Kubernetes. Les charts Helm
+                empaquettent des manifests YAML avec des templates paramétrables.</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">etcd</span>
+              <span class="glossary-def">Base de données clé-valeur distribuée qui stocke
+                l'état du cluster K8s (toutes les ressources, leur spec et leur statut).</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-section">
+          <h3>💡 Exemple concret</h3>
+          <div class="card">
+            <p><strong>Scénario</strong>&nbsp;: L'équipe déploie une API Node.js avec une base
+              PostgreSQL sur un cluster K8s en Minikube (développement local).</p>
+            <ol class="numbered-list">
+              <li>L'API est conteneurisée dans une image Docker taguée <code>api:v1.0.0</code>
+                et poussée sur un registry.</li>
+              <li>Un fichier <code>deployment.yaml</code> définit 3 réplicas avec une sonde
+                de santé (<code>livenessProbe</code>) et des <strong>resource limits</strong>.</li>
+              <li>Un <code>service.yaml</code> expose les Pods sur le port 80 en
+                <strong>ClusterIP</strong> (interne au cluster).</li>
+              <li>Un <code>ingress.yaml</code> route <code>api.monapp.com</code> vers le
+                Service avec terminaison TLS gérée par cert-manager.</li>
+              <li>PostgreSQL est déployé via un <strong>StatefulSet</strong> avec un
+                PersistentVolumeClaim pour les données, référencé via un Secret pour
+                le mot de passe.</li>
+              <li>La pipeline CI/CD construit l'image, met à jour le tag dans le fichier
+                YAML et exécute <code>kubectl apply -f k8s/</code> pour déployer.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="guide-section">
+          <h3>🧠 Quiz express</h3>
+          <div class="quiz">
+            <div class="quiz__question">
+              <p class="quiz__text">1. Quel objet Kubernetes garantit un nombre défini de réplicas de Pods ?</p>
+              <ul class="quiz__options">
+                <li class="quiz__option" data-correct="false">Service</li>
+                <li class="quiz__option" data-correct="true">Deployment</li>
+                <li class="quiz__option" data-correct="false">Ingress</li>
+                <li class="quiz__option" data-correct="false">ConfigMap</li>
+              </ul>
+              <p class="quiz__feedback">Un <strong>Deployment</strong> gère le cycle de vie
+                des Pods : il maintient le nombre de réplicas, exécute les rolling updates
+                et permet le rollback. Le Service ne fait que du routage réseau.</p>
+            </div>
+            <div class="quiz__question">
+              <p class="quiz__text">2. À quoi sert un objet Ingress dans Kubernetes ?</p>
+              <ul class="quiz__options">
+                <li class="quiz__option" data-correct="false">Stocker des mots de passe</li>
+                <li class="quiz__option" data-correct="false">Créer des volumes persistants</li>
+                <li class="quiz__option" data-correct="true">Exposer des Services HTTP/HTTPS vers l'extérieur avec routage et TLS</li>
+                <li class="quiz__option" data-correct="false">Définir le nombre de réplicas</li>
+              </ul>
+              <p class="quiz__feedback">Un <strong>Ingress</strong> expose vos Services à
+                l'extérieur du cluster avec des règles de routage par hostname/chemin et
+                la terminaison TLS. Sans Ingress, les Services ne sont accessibles qu'en
+                interne (ClusterIP) ou via un LoadBalancer.</p>
+            </div>
+            <div class="quiz__question">
+              <p class="quiz__text">3. Pourquoi ne faut-il pas utiliser le tag <code>:latest</code> pour les images en production ?</p>
+              <ul class="quiz__options">
+                <li class="quiz__option" data-correct="false">C'est plus lent à télécharger</li>
+                <li class="quiz__option" data-correct="true">Le tag change à chaque build, rendant le déploiement non reproductible et le rollback impossible</li>
+                <li class="quiz__option" data-correct="false">Kubernetes ne supporte pas <code>:latest</code></li>
+                <li class="quiz__option" data-correct="false">Cela consomme plus de mémoire</li>
+              </ul>
+              <p class="quiz__feedback">Avec <code>:latest</code>, on ne sait pas quelle
+                version du code tourne réellement, et on ne peut pas revenir à la version
+                précédente. Toujours utiliser un tag sémantique (<code>v1.2.3</code>) ou
+                le hash du commit (<code>a1b2c3d</code>).</p>
+            </div>
+            <p class="quiz__result"></p>
           </div>
         </div>
 
