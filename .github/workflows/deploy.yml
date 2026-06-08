@@ -1,0 +1,49 @@
+# Nom du workflow (apparaît dans l'onglet Actions)
+name: Deploy to GitHub Pages
+
+# Déclencheur : s'exécute à chaque push sur main
+on:
+  push:
+    branches:
+      - main
+
+  # Permet aussi un déclenchement manuel depuis l'UI GitHub
+  workflow_dispatch:
+
+# Un seul job : "deploy" (d'autres jobs CI pourraient être ajoutés)
+jobs:
+  deploy:
+    # Runner : machine Ubuntu fournie gratuitement par GitHub
+    runs-on: ubuntu-latest
+
+    # Permissions nécessaires pour déployer sur Pages
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    # Environnement de déploiement (historise les déploiements)
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Les 4 étapes de la pipeline
+    steps:
+      # 1. Récupère le code source du dépôt
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Configure l'environnement GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      # 3. Empaquette tous les fichiers du site en un artifact
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      # 4. Déploie l'artifact sur GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
