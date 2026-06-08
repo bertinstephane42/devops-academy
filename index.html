@@ -365,9 +365,9 @@
           </p>
           <ol class="numbered-list">
             <li>Allez sur votre dépôt <strong>devops-academy</strong> (ou <a href="https://github.com/new" target="_blank" rel="noopener noreferrer">créez-en un nouveau</a>).</li>
-            <li>Onglet <strong>Projects</strong> → <strong>Create project</strong> → choisir <strong>Board</strong>.</li>
+            <li>Onglet <strong>Projects</strong> → <strong>Create project</strong> → choisir le layout <strong>Board</strong>.</li>
             <li>Nommez-le <strong>DevOps Kanban</strong> et créez les colonnes : <strong>Backlog</strong>, <strong>To Do</strong>, <strong>In Progress</strong>, <strong>Review</strong>, <strong>Done</strong>.</li>
-            <li>Ajoutez une limite WIP de <strong>2</strong> sur la colonne <strong>In Progress</strong> (Project settings → column → WIP limit).</li>
+            <li>Ajoutez une limite de <strong>2</strong> éléments sur la colonne <strong>In Progress</strong> (menu de colonne → <strong>Set column limit</strong>).</li>
             <li>Créez <strong>6 issues</strong> dans le dépôt avec des labels variés (<code>feature</code>, <code>bug</code>, <code>chore</code>) et ajoutez-les au projet.</li>
             <li>Simulez un sprint : déplacez les issues d'une colonne à l'autre en suivant le flux.</li>
             <li>Observez le comportement quand la colonne In Progress atteint sa limite WIP.</li>
@@ -615,7 +615,7 @@ docs(readme): mettre à jour les instructions d'installation</code></pre>
             <li>Créez une branche : <code>git checkout -b feature/ma-modification</code>.</li>
             <li>Modifiez un fichier (ex. <code>index.html</code>) et commitez : <code>git add . && git commit -m "feat: ajouter ma modification"</code>.</li>
             <li>Poussez la branche : <code>git push origin feature/ma-modification</code>.</li>
-            <li>Ouvrez une Pull Request sur GitHub → cliquez sur <strong>Compare & pull request</strong>. Remplissez le template avec le contexte, les changements et une checklist.</li>
+            <li>Ouvrez une Pull Request sur GitHub → cliquez sur <strong>Compare & pull request</strong>. Rédigez une description détaillée : contexte, changements, captures d'écran.</li>
             <li>Ajoutez un commentaire de review sur votre propre PR (ou invitez un camarade).</li>
             <li>Mergez la PR avec <strong>Squash and merge</strong>.</li>
           </ol>
@@ -895,7 +895,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
+      - run: npm install
       - run: npm test
       - run: npm run lint</code></pre>
           </div>
@@ -1405,10 +1405,10 @@ EXPOSE 80</code></pre>
           <ol class="numbered-list">
             <li>Créez un compte gratuit sur <a href="https://grafana.com/signup" target="_blank" rel="noopener noreferrer">grafana.com</a> (plan <strong>Free</strong>, pas de carte bleue).</li>
             <li>Après connexion, accédez à votre instance Grafana (<code>VOTRE-NOM.grafana.net</code>).</li>
-            <li>Cliquez sur <strong>Connections → Add new connection</strong> et cherchez <strong>Prometheus</strong> (démonstration intégrée).</li>
-            <li>Importez le dashboard <strong>Node Exporter Full</strong> (ID <code>1860</code>) pour visualiser des métriques système.</li>
-            <li>Explorez l'onglet <strong>Explore</strong> : tapez une requête PromQL comme <code>rate(node_cpu_seconds_total[5m])</code>.</li>
-            <li>Créez une alerte : <strong>Alerting → Alert rules → New rule</strong>. Définissez une condition sur l'utilisation CPU &gt; 80 % pendant 5 minutes.</li>
+            <li>Cliquez sur <strong>Connections → Add new connection</strong> et ajoutez la source <strong>TestData</strong> (intégrée, aucune configuration requise).</li>
+            <li>Créez un dashboard : <strong>Dashboards → New → New dashboard</strong>. Ajoutez un panel <strong>Time series</strong> avec la source TestData et le scénario <strong>Random Walk</strong>.</li>
+            <li>Explorez l'onglet <strong>Explore</strong> : sélectionnez TestData, choisissez le scénario <strong>CSV Metric Values</strong> et observez les données simulées.</li>
+            <li>Créez une alerte : <strong>Alerting → Alert rules → New rule</strong>. Choisissez la source TestData, sélectionnez <strong>Random Walk</strong>, définissez une condition <strong>IS ABOVE 80</strong>.</li>
             <li>Configurez une notification (email ou Slack via webhook).</li>
           </ol>
           <div class="info-box info-box--tip">
@@ -1670,7 +1670,7 @@ resource "aws_instance" "app" {
             en créant un fichier local. Aucun cloud nécessaire.
           </p>
           <ol class="numbered-list">
-            <li>Installez Terraform : <code>sudo apt update && sudo apt install -y terraform</code> (Linux) ou <a href="https://developer.hashicorp.com/terraform/downloads" target="_blank" rel="noopener noreferrer">téléchargez le binaire</a>.</li>
+            <li>Installez Terraform : <code>wget -qO- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg && echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list && sudo apt update && sudo apt install -y terraform</code></li>
             <li>Créez un dossier <code>tp-terraform/</code> et un fichier <code>main.tf</code> (voir l'encart "Code").</li>
             <li>Exécutez <code>terraform init</code> → télécharge le fournisseur <code>local</code>.</li>
             <li>Exécutez <code>terraform plan</code> → lisez le plan d'exécution. Que va créer Terraform ?</li>
@@ -1968,6 +1968,7 @@ spec:
             <li>Montez à 3 réplicas : <code>kubectl scale deployment hello-nginx --replicas=3</code> → <code>kubectl get pods -w</code>.</li>
             <li>Faites un rolling update : <code>kubectl set image deployment/hello-nginx nginx=nginx:1.26</code> → <code>kubectl rollout status deployment/hello-nginx</code>.</li>
             <li>Annulez le déploiement : <code>kubectl rollout undo deployment/hello-nginx</code> → vérifiez l'historique avec <code>kubectl rollout history deployment/hello-nginx</code>.</li>
+            <li>Vérifiez l'accès : dans l'interface PWK, le port <code>3xxxx</code> apparaît en haut de la page. Cliquez dessus pour ouvrir l'application Nginx dans un nouvel onglet.</li>
           </ol>
           <div class="info-box info-box--tip">
             <h4>💡 Résultat attendu</h4>
