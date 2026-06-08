@@ -357,6 +357,30 @@
         </div>
       </div>
 
+        <div class="guide-section">
+          <h3>🧪 Travaux pratiques — Créer un tableau Kanban avec GitHub Projects</h3>
+          <p>
+            Mettez en pratique les concepts de planification Agile en créant un
+            tableau Kanban visuel directement dans GitHub.
+          </p>
+          <ol class="numbered-list">
+            <li>Allez sur votre dépôt <strong>devops-academy</strong> (ou <a href="https://github.com/new" target="_blank" rel="noopener noreferrer">créez-en un nouveau</a>).</li>
+            <li>Onglet <strong>Projects</strong> → <strong>Create project</strong> → choisir <strong>Board</strong>.</li>
+            <li>Nommez-le <strong>DevOps Kanban</strong> et créez les colonnes : <strong>Backlog</strong>, <strong>To Do</strong>, <strong>In Progress</strong>, <strong>Review</strong>, <strong>Done</strong>.</li>
+            <li>Ajoutez une limite WIP de <strong>2</strong> sur la colonne <strong>In Progress</strong> (Project settings → column → WIP limit).</li>
+            <li>Créez <strong>6 issues</strong> dans le dépôt avec des labels variés (<code>feature</code>, <code>bug</code>, <code>chore</code>) et ajoutez-les au projet.</li>
+            <li>Simulez un sprint : déplacez les issues d'une colonne à l'autre en suivant le flux.</li>
+            <li>Observez le comportement quand la colonne In Progress atteint sa limite WIP.</li>
+          </ol>
+          <div class="info-box info-box--tip">
+            <h4>💡 Résultat attendu</h4>
+            <p>Un tableau Kanban avec 6 issues réparties dans les colonnes, une limite WIP opérationnelle qui bloque l'ajout de nouvelles tâches, et une visibilité complète du flux de travail.</p>
+          </div>
+          <div class="demo-action">
+            <button class="btn-demo" onclick="window.open('https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects','_blank')">📖 Documentation GitHub Projects</button>
+          </div>
+        </div>
+
     </section>
 
     <!-- Onglet 2 – Développement -->
@@ -578,6 +602,31 @@ docs(readme): mettre à jour les instructions d'installation</code></pre>
           <p class="quiz__result"></p>
         </div>
       </div>
+
+        <div class="guide-section">
+          <h3>🧪 Travaux pratiques — Forker, créer une branche et ouvrir une Pull Request</h3>
+          <p>
+            Simulez un workflow de développement collaboratif : forker un dépôt,
+            créer une branche de fonctionnalité, pusher du code et ouvrir une PR.
+          </p>
+          <ol class="numbered-list">
+            <li>Forkez un dépôt public (par exemple <a href="https://github.com/octocat/Spoon-Knife" target="_blank" rel="noopener noreferrer">github.com/octocat/Spoon-Knife</a>).</li>
+            <li>Clonez votre fork en local : <code>git clone https://github.com/VOTRE-USER/Spoon-Knife.git</code>.</li>
+            <li>Créez une branche : <code>git checkout -b feature/ma-modification</code>.</li>
+            <li>Modifiez un fichier (ex. <code>index.html</code>) et commitez : <code>git add . && git commit -m "feat: ajouter ma modification"</code>.</li>
+            <li>Poussez la branche : <code>git push origin feature/ma-modification</code>.</li>
+            <li>Ouvrez une Pull Request sur GitHub → cliquez sur <strong>Compare & pull request</strong>. Remplissez le template avec le contexte, les changements et une checklist.</li>
+            <li>Ajoutez un commentaire de review sur votre propre PR (ou invitez un camarade).</li>
+            <li>Mergez la PR avec <strong>Squash and merge</strong>.</li>
+          </ol>
+          <div class="info-box info-box--tip">
+            <h4>💡 Résultat attendu</h4>
+            <p>Une PR mergée visible dans l'historique du dépôt, avec au moins un commentaire de review et un commit squashé. Le cycle complet forker → brancher → PR → review → merge est maîtrisé.</p>
+          </div>
+          <div class="demo-action">
+            <button class="btn-demo" onclick="window.open('https://docs.github.com/en/get-started/quickstart/fork-a-repo','_blank')">📖 Guide GitHub Fork</button>
+          </div>
+        </div>
 
     </section>
 
@@ -817,6 +866,47 @@ jobs:
           <p class="quiz__result"></p>
         </div>
       </div>
+
+        <div class="guide-section">
+          <h3>🧪 Travaux pratiques — Ajouter un pipeline CI à un dépôt</h3>
+          <p>
+            Créez un workflow GitHub Actions qui exécute automatiquement les tests
+            et le linting à chaque push et Pull Request.
+          </p>
+          <ol class="numbered-list">
+            <li>Dans votre dépôt, créez le dossier <code>.github/workflows/</code>.</li>
+            <li>Créez le fichier <code>.github/workflows/ci.yml</code>.</li>
+            <li>Ajoutez la configuration suivante (voir l'encart "Code").</li>
+            <li>Poussez le fichier sur la branche <code>main</code>.</li>
+            <li>Ouvrez l'onglet <strong>Actions</strong> sur GitHub → le workflow se déclenche automatiquement.</li>
+            <li>Cliquez sur la run pour voir les étapes en vert (success).</li>
+            <li>Créez une PR qui casse un test → le workflow passe en rouge → corrigez.</li>
+            <li>Ajoutez un badge CI dans le <code>README.md</code> : <code>[![CI](https://github.com/VOTRE-USER/VOTRE-REPO/actions/workflows/ci.yml/badge.svg)](...)</code>.</li>
+          </ol>
+          <div class="code-sample code-sample--inline">
+            <div class="code-sample__header"><span>.github/workflows/ci.yml</span></div>
+            <pre><code>name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm test
+      - run: npm run lint</code></pre>
+          </div>
+          <div class="info-box info-box--tip">
+            <h4>💡 Résultat attendu</h4>
+            <p>Un badge vert <strong>CI passing</strong> dans le README, un historique de runs dans l'onglet Actions, et une PR rejetée automatiquement si les tests échouent.</p>
+          </div>
+          <div class="demo-action">
+            <button class="btn-demo" onclick="window.open('https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions','_blank')">📖 Documentation GitHub Actions</button>
+          </div>
+        </div>
 
     </section>
 
@@ -1062,6 +1152,30 @@ EXPOSE 80</code></pre>
         </div>
       </div>
 
+        <div class="guide-section">
+          <h3>🧪 Travaux pratiques — Déployer un site statique avec Vercel</h3>
+          <p>
+            Automatisez le déploiement continu d'un site statique avec Vercel,
+            avec previews automatiques pour chaque Pull Request.
+          </p>
+          <ol class="numbered-list">
+            <li>Créez un compte gratuit sur <a href="https://vercel.com/signup" target="_blank" rel="noopener noreferrer">vercel.com</a> (via GitHub — pas de carte bleue).</li>
+            <li>Cliquez sur <strong>Add New → Project</strong> et importez votre dépôt GitHub.</li>
+            <li>Laissez les paramètres par défaut (Vercel détecte automatiquement le framework).</li>
+            <li>Cliquez sur <strong>Deploy</strong>. Le site est en ligne en ~30 secondes.</li>
+            <li>Vercel génère une URL unique (ex. <code>mon-projet.vercel.app</code>). Ouvrez-la.</li>
+            <li>Créez une PR sur GitHub avec une modification → Vercel crée automatiquement un <strong>Preview Deployment</strong> avec une URL dédiée.</li>
+            <li>Dans Vercel, explorez l'onglet <strong>Deployments</strong> : historique, logs, rollback possible en 1 clic.</li>
+          </ol>
+          <div class="info-box info-box--tip">
+            <h4>💡 Résultat attendu</h4>
+            <p>Un site public accessible via <code>*.vercel.app</code>, un preview déployé automatiquement sur chaque PR avec sa propre URL, et la possibilité de rollback immédiat depuis le dashboard.</p>
+          </div>
+          <div class="demo-action">
+            <button class="btn-demo" onclick="window.open('https://vercel.com/docs','_blank')">📖 Documentation Vercel</button>
+          </div>
+        </div>
+
     </section>
 
     <!-- Onglet 5 – Monitoring -->
@@ -1281,6 +1395,30 @@ EXPOSE 80</code></pre>
           <p class="quiz__result"></p>
         </div>
       </div>
+
+        <div class="guide-section">
+          <h3>🧪 Travaux pratiques — Créer un dashboard Grafana Cloud avec alertes</h3>
+          <p>
+            Configurez Grafana Cloud (niveau gratuit, sans carte bancaire) pour
+            visualiser des métriques et déclencher une alerte.
+          </p>
+          <ol class="numbered-list">
+            <li>Créez un compte gratuit sur <a href="https://grafana.com/signup" target="_blank" rel="noopener noreferrer">grafana.com</a> (plan <strong>Free</strong>, pas de carte bleue).</li>
+            <li>Après connexion, accédez à votre instance Grafana (<code>VOTRE-NOM.grafana.net</code>).</li>
+            <li>Cliquez sur <strong>Connections → Add new connection</strong> et cherchez <strong>Prometheus</strong> (démonstration intégrée).</li>
+            <li>Importez le dashboard <strong>Node Exporter Full</strong> (ID <code>1860</code>) pour visualiser des métriques système.</li>
+            <li>Explorez l'onglet <strong>Explore</strong> : tapez une requête PromQL comme <code>rate(node_cpu_seconds_total[5m])</code>.</li>
+            <li>Créez une alerte : <strong>Alerting → Alert rules → New rule</strong>. Définissez une condition sur l'utilisation CPU &gt; 80 % pendant 5 minutes.</li>
+            <li>Configurez une notification (email ou Slack via webhook).</li>
+          </ol>
+          <div class="info-box info-box--tip">
+            <h4>💡 Résultat attendu</h4>
+            <p>Un dashboard Grafana fonctionnel avec des métriques visuelles, une requête PromQL exécutable depuis l'Explorer, et une règle d'alerte prête à notifier en cas de dépassement de seuil.</p>
+          </div>
+          <div class="demo-action">
+            <button class="btn-demo" onclick="window.open('https://grafana.com/docs/grafana/latest/getting-started/','_blank')">📖 Démarrer avec Grafana</button>
+          </div>
+        </div>
 
     </section>
 
@@ -1524,6 +1662,44 @@ resource "aws_instance" "app" {
         </div>
 
       </div>
+
+        <div class="guide-section">
+          <h3>🧪 Travaux pratiques — Provisionner une ressource locale avec Terraform</h3>
+          <p>
+            Découvrez le cycle <code>init → plan → apply → destroy</code> de Terraform
+            en créant un fichier local. Aucun cloud nécessaire.
+          </p>
+          <ol class="numbered-list">
+            <li>Installez Terraform : <code>sudo apt update && sudo apt install -y terraform</code> (Linux) ou <a href="https://developer.hashicorp.com/terraform/downloads" target="_blank" rel="noopener noreferrer">téléchargez le binaire</a>.</li>
+            <li>Créez un dossier <code>tp-terraform/</code> et un fichier <code>main.tf</code> (voir l'encart "Code").</li>
+            <li>Exécutez <code>terraform init</code> → télécharge le fournisseur <code>local</code>.</li>
+            <li>Exécutez <code>terraform plan</code> → lisez le plan d'exécution. Que va créer Terraform ?</li>
+            <li>Exécutez <code>terraform apply -auto-approve</code> → vérifiez que <code>bonjour.txt</code> a été créé.</li>
+            <li>Modifiez <code>main.tf</code> (changez le message) puis relancez <code>terraform plan</code> et <code>terraform apply</code> → observez la modification.</li>
+            <li>Exécutez <code>terraform destroy -auto-approve</code> → le fichier disparaît.</li>
+          </ol>
+          <div class="code-sample code-sample--inline">
+            <div class="code-sample__header"><span>main.tf</span></div>
+            <pre><code>terraform {
+  required_providers {
+    local = { source = "hashicorp/local", version = "~> 2.0" }
+  }
+}
+
+resource "local_file" "hello" {
+  content  = "Bonjour DevOps !"
+  filename = "${path.module}/bonjour.txt"
+}</code></pre>
+          </div>
+          <div class="info-box info-box--tip">
+            <h4>💡 Résultat attendu</h4>
+            <p>Le fichier <code>bonjour.txt</code> créé, modifié, puis supprimé. Le fichier <code>terraform.tfstate</code> permet de visualiser l'état géré par Terraform. L'idempotence est vérifiée : relancer <code>apply</code> sans changement n'a aucun effet.</p>
+          </div>
+          <div class="demo-action">
+            <button class="btn-demo" onclick="window.open('https://developer.hashicorp.com/terraform/tutorials/docker-get-started','_blank')">📖 Tutoriel Terraform</button>
+          </div>
+        </div>
+
     </section>
 
     <!-- Onglet 8 – Kubernetes -->
@@ -1773,6 +1949,35 @@ spec:
         </div>
 
       </div>
+
+        <div class="guide-section">
+          <h3>🧪 Travaux pratiques — Déployer Nginx sur Kubernetes avec rolling update</h3>
+          <p>
+            Utilisez <strong>Play with Kubernetes</strong> (gratuit, sans installation)
+            pour déployer une application, la scaler et effectuer une mise à jour
+            progressive sans downtime.
+          </p>
+          <ol class="numbered-list">
+            <li>Ouvrez <a href="https://labs.play-with-k8s.com/" target="_blank" rel="noopener noreferrer">labs.play-with-k8s.com</a> et cliquez sur <strong>Start</strong>.</li>
+            <li>Cliquez sur <strong>Add New Instance</strong> → un terminal apparaît.</li>
+            <li>Initialisez le cluster : <code>kubeadm init --apiserver-advertise-address=$(hostname -i) --pod-network-cidr=10.244.0.0/16</code>.</li>
+            <li>Suivez les instructions pour configurer <code>kubectl</code> (<code>mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && chown $(id -u):$(id -g) $HOME/.kube/config</code>).</li>
+            <li>Installez le réseau Flannel : <code>kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</code>.</li>
+            <li>Déployez Nginx : <code>kubectl create deployment hello-nginx --image=nginx:1.25</code>.</li>
+            <li>Exposez le déploiement : <code>kubectl expose deployment hello-nginx --port=80 --type=NodePort</code>.</li>
+            <li>Montez à 3 réplicas : <code>kubectl scale deployment hello-nginx --replicas=3</code> → <code>kubectl get pods -w</code>.</li>
+            <li>Faites un rolling update : <code>kubectl set image deployment/hello-nginx nginx=nginx:1.26</code> → <code>kubectl rollout status deployment/hello-nginx</code>.</li>
+            <li>Annulez le déploiement : <code>kubectl rollout undo deployment/hello-nginx</code> → vérifiez l'historique avec <code>kubectl rollout history deployment/hello-nginx</code>.</li>
+          </ol>
+          <div class="info-box info-box--tip">
+            <h4>💡 Résultat attendu</h4>
+            <p>Un cluster Kubernetes fonctionnel avec 3 pods Nginx en écoute, un service NodePort qui expose l'application, un rolling update réussi et un rollback effectué. Toutes les commandes <code>kubectl</code> de base sont maîtrisées.</p>
+          </div>
+          <div class="demo-action">
+            <button class="btn-demo" onclick="window.open('https://labs.play-with-k8s.com/','_blank')">🚀 Lancer Play with K8s</button>
+          </div>
+        </div>
+
     </section>
     <!-- Onglet 6 – GitHub & CI/CD (INTERACTIF - GUIDE DÉTAILLÉ) -->
     <section id="panel-6" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-6">
