@@ -335,135 +335,511 @@ EXPOSE 80</code></pre>
       </div>
     </section>
 
-    <!-- Onglet 6 – GitHub & CI/CD (INTERACTIF) -->
+    <!-- Onglet 6 – GitHub & CI/CD (INTERACTIF - GUIDE DÉTAILLÉ) -->
     <section id="panel-6" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-6">
       <div class="container">
         <h2>GitHub &amp; CI/CD <span class="badge">🔧 Démo</span></h2>
         <p class="lead">
-          Ce projet est conçu pour être déployé avec <strong>GitHub Actions</strong> sur
-          <strong>GitHub Pages</strong>. Suivez le guide ci-dessous.
+          Ce guide détaille <strong>chaque étape</strong> pour transformer ces fichiers statiques
+          en un site livré en continu via <strong>GitHub Actions</strong> sur
+          <strong>GitHub Pages</strong>, le tout sur un <strong>compte gratuit</strong>.
         </p>
 
-        <!-- Guide pas à pas -->
-        <div class="steps-guide" id="guide-steps">
-          <h3>📋 Guide pas à pas</h3>
+        <!-- ================================================================ -->
+        <!-- SECTION 1 – Compte GitHub gratuit                                 -->
+        <!-- ================================================================ -->
+        <div class="guide-section">
+          <h3>1. Créer un compte GitHub gratuit</h3>
+          <p>
+            Rendez-vous sur <a href="https://github.com/signup" target="_blank" rel="noopener noreferrer">github.com/signup</a>.
+            Le plan <strong>Free</strong> donne accès à&nbsp;:
+          </p>
+          <ul class="check-list">
+            <li>Dépôts publics et privés illimités</li>
+            <li><strong>2 000 minutes/mois</strong> de GitHub Actions (largement suffisant pour ce projet)</li>
+            <li><strong>500 Mo</strong> de stockage pour les artefacts GitHub Packages</li>
+            <li>GitHub Pages (public gratuit, privé uniquement sur plan Team/Enterprise)</li>
+            <li>Jusqu'à <strong>20 jobs simultanés</strong> sur des runners Ubuntu/Windows/macOS</li>
+          </ul>
+          <div class="info-box info-box--tip">
+            <h4>💡 Astuce étudiante</h4>
+            <p>
+              Les étudiants peuvent demander le <strong>GitHub Student Developer Pack</strong>
+              (<a href="https://education.github.com/pack" target="_blank" rel="noopener noreferrer">education.github.com/pack</a>)
+              qui débloque des fonctionnalités supplémentaires gratuites (copies privées illimitées, outils pro,
+              etc.). Il suffit d'un email <code>*.edu</code> ou d'une carte étudiante.
+            </p>
+          </div>
+        </div>
 
-          <div class="step" data-step="1">
-            <span class="step__badge">1</span>
-            <div>
-              <strong>Créez un dépôt GitHub</strong>
-              <p>Poussez ce projet sur un dépôt public nommé <code>devops-academy</code>.</p>
-            </div>
+        <!-- ================================================================ -->
+        <!-- SECTION 2 – Créer le dépôt                                       -->
+        <!-- ================================================================ -->
+        <div class="guide-section">
+          <h3>2. Créer le dépôt sur GitHub</h3>
+
+          <h4>Méthode A — Créer le dépôt puis pousser le code en local</h4>
+          <ol class="numbered-list">
+            <li>Cliquez sur le <strong>+</strong> en haut à droite de GitHub → <strong>New repository</strong>.</li>
+            <li>Nommez-le <code>devops-academy</code> (ou le nom de votre choix).</li>
+            <li>Cochez <strong>Public</strong> (nécessaire pour GitHub Pages gratuit).</li>
+            <li>Ne cochez <em>pas</em> «&nbsp;Add a README&nbsp;» (nous allons pousser le projet existant).</li>
+            <li>Cliquez sur <strong>Create repository</strong>.</li>
+          </ol>
+          <p>Dans votre terminal, à la racine du projet, exécutez&nbsp;:</p>
+          <div class="code-sample code-sample--inline">
+            <pre><code>git init
+git add .
+git commit -m "feat: première version de l'application DevOps Academy"
+git remote add origin https://github.com/votre-utilisateur/devops-academy.git
+git push -u origin main</code></pre>
           </div>
 
-          <div class="step" data-step="2">
-            <span class="step__badge">2</span>
-            <div>
-              <strong>Activez GitHub Pages</strong>
-              <p>Settings → Pages → Source: <em>Deploy from a branch</em> → branche <code>main</code>,
-               dossier <code>/ (root)</code> → Save.</p>
-            </div>
+          <h4>Méthode B — Tout faire depuis l'interface web de GitHub</h4>
+          <ol class="numbered-list">
+            <li>Créez le dépôt avec le même nom, mais cette fois <strong>cochez</strong>
+                «&nbsp;Add a README&nbsp;».</li>
+            <li>Dans le dépôt, cliquez sur <strong>Add file</strong> → <strong>Upload files</strong>.</li>
+            <li>Glissez-déposez les fichiers <code>index.html</code>, <code>styles.css</code> et
+                <code>app.js</code>.</li>
+            <li>Ajoutez un message de commit et validez.</li>
+          </ol>
+          <div class="info-box info-box--warn">
+            <h4>⚠️ Important</h4>
+            <p>
+              Pour la démonstration DevOps, la <strong>Méthode A</strong> est préférable&nbsp;:
+              elle vous fait manipuler Git en ligne de commande, ce qui est une compétence
+              fondamentale en entreprise.
+            </p>
           </div>
+        </div>
 
-          <div class="step" data-step="3">
-            <span class="step__badge">3</span>
-            <div>
-              <strong>Ajoutez le workflow CI/CD</strong>
-              <p>Créez le fichier <code>.github/workflows/deploy.yml</code> (contenu ci-dessous).</p>
+        <!-- ================================================================ -->
+        <!-- SECTION 3 – Comprendre GitHub Actions (concepts)                 -->
+        <!-- ================================================================ -->
+        <div class="guide-section">
+          <h3>3. Comprendre GitHub Actions — les concepts clés</h3>
+          <p>
+            GitHub Actions est le moteur <strong>CI/CD intégré</strong> à GitHub. Voici son
+            vocabulaire essentiel&nbsp;:
+          </p>
+          <div class="glossary-grid">
+            <div class="glossary-item">
+              <span class="glossary-term">Workflow</span>
+              <span class="glossary-def">Fichier YAML (dans <code>.github/workflows/</code>) qui définit
+                une ou plusieurs automatisations.</span>
             </div>
-          </div>
-
-          <div class="step" data-step="4">
-            <span class="step__badge">4</span>
-            <div>
-              <strong>Poussez et vérifiez</strong>
-              <p>Après un <code>git push</code>, allez dans l'onglet Actions de votre dépôt
-               pour voir la pipeline s'exécuter.</p>
+            <div class="glossary-item">
+              <span class="glossary-term">Event</span>
+              <span class="glossary-def">Déclencheur : <code>push</code>, <code>pull_request</code>,
+                <code>schedule</code> (cron), <code>workflow_dispatch</code> (manuel), etc.</span>
             </div>
-          </div>
-
-          <div class="step" data-step="5">
-            <span class="step__badge">5</span>
-            <div>
-              <strong>Accédez au site</strong>
-              <p>L'URL sera <code>https://&lt;utilisateur&gt;.github.io/devops-academy/</code>.</p>
+            <div class="glossary-item">
+              <span class="glossary-term">Job</span>
+              <span class="glossary-def">Ensemble d'étapes exécutées sur le même runner. Les jobs
+                peuvent s'exécuter en parallèle ou en séquence.</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Step</span>
+              <span class="glossary-def">Action unitaire : une commande shell ou une <em>action</em>
+                réutilisable (ex: <code>actions/checkout@v4</code>).</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Runner</span>
+              <span class="glossary-def">Machine virtuelle (Ubuntu, Windows, macOS) qui exécute le
+                job. Les runners hébergés par GitHub sont gratuits (limités).</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Action</span>
+              <span class="glossary-def">Brique réutilisable publiée sur le GitHub Marketplace.
+                Exemple : <code>actions/checkout@v4</code> clone le dépôt.</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Artifact</span>
+              <span class="glossary-def">Fichier produit par un job (ex: le dossier du site compilé)
+                et passé au job suivant ou téléchargé.</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Secret</span>
+              <span class="glossary-def">Variable chiffrée stockée dans le dépôt (Settings → Secrets
+                and variables). Ne jamais hard-coder un token.</span>
             </div>
           </div>
         </div>
 
-        <!-- Zone de code avec syntax highlighting simulé -->
-        <h3>📄 Fichier de workflow GitHub Actions</h3>
-        <p>Créez <code>.github/workflows/deploy.yml</code> à la racine du dépôt&nbsp;:</p>
-
-        <div class="code-sample code-sample--interactive" id="workflow-sample">
-          <div class="code-sample__header">
-            <span>.github/workflows/deploy.yml</span>
-            <button class="btn-copy" id="btn-copy" aria-label="Copier le code">
-              📋 Copier
-            </button>
+        <!-- ================================================================ -->
+        <!-- SECTION 4 – Activer GitHub Pages                                 -->
+        <!-- ================================================================ -->
+        <div class="guide-section">
+          <h3>4. Activer GitHub Pages dans les paramètres</h3>
+          <p>
+            GitHub Pages permet d'héberger un site statique directement depuis un dépôt.
+            Voici la procédure&nbsp;:
+          </p>
+          <ol class="numbered-list">
+            <li>Ouvrez votre dépôt sur GitHub.</li>
+            <li>Allez dans l'onglet <strong>Settings</strong> (le dernier en haut à droite).</li>
+            <li>Dans le menu latéral gauche, cliquez sur <strong>Pages</strong>.</li>
+            <li>Sous «&nbsp;Branch&nbsp;», sélectionnez <strong>main</strong> et le dossier
+                <strong>/ (root)</strong>.</li>
+            <li>Cliquez sur <strong>Save</strong>.</li>
+            <li>Après quelques secondes, le message «&nbsp;Your site is live at
+                <code>https://votre-utilisateur.github.io/devops-academy/</code>&nbsp;»
+                apparaît en haut de la page.</li>
+          </ol>
+          <div class="info-box">
+            <h4>📌 Ce qui se passe en coulisses</h4>
+            <p>
+              Quand vous sélectionnez une branche, GitHub déploie automatiquement le contenu
+              du dossier racine de cette branche sur ses serveurs statiques (CDN).
+              Cependant, sans <strong>GitHub Actions</strong>, il n'y a <em>pas</em> de pipeline
+              CI/CD — le déploiement est automatique mais non industrialisé.
+              L'étape suivante ajoute la véritable chaîne CI/CD.
+            </p>
           </div>
-          <pre><code id="workflow-code"><span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">Deploy to GitHub Pages</span>
+        </div>
 
+        <!-- ================================================================ -->
+        <!-- SECTION 5 – Ajouter le workflow GitHub Actions                   -->
+        <!-- ================================================================ -->
+        <div class="guide-section">
+          <h3>5. Créer le workflow CI/CD avec GitHub Actions</h3>
+          <p>
+            Le fichier YAML ci-dessous définit un <strong>workflow</strong> qui se déclenche
+            à chaque <code>push</code> sur la branche <code>main</code>. Il utilise les actions
+            officielles GitHub pour préparer et déployer le site sur Pages.
+          </p>
+
+          <h4>Création via l'interface GitHub (recommandé pour les débutants)</h4>
+          <ol class="numbered-list">
+            <li>Sur la page d'accueil de votre dépôt, cliquez sur <strong>Add file</strong> →
+                <strong>Create new file</strong>.</li>
+            <li>Dans le champ «&nbsp;Name your file...&nbsp;», tapez exactement&nbsp;:
+                <code>.github/workflows/deploy.yml</code>.</li>
+            <li>Copiez le contenu YAML ci-dessous et collez-le dans l'éditeur en ligne.</li>
+            <li>Cliquez sur <strong>Commit changes...</strong> → validez directement sur
+                <code>main</code>.</li>
+          </ol>
+          <p>
+            <em>Variante locale</em>&nbsp;: créez le dossier <code>.github/workflows/</code>
+            à la racine du projet, placez-y le fichier, puis <code>git add &amp;&amp; git commit &amp;&amp; git push</code>.
+          </p>
+
+          <!-- Fichier YAML avec annotations -->
+          <div class="code-sample code-sample--interactive" id="workflow-sample">
+            <div class="code-sample__header">
+              <span>.github/workflows/deploy.yml</span>
+              <button class="btn-copy" id="btn-copy" aria-label="Copier le code">
+                📋 Copier
+              </button>
+            </div>
+            <pre><code id="workflow-code"><span class="hl-comment"># Nom du workflow (apparaît dans l'onglet Actions)</span>
+<span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">Deploy to GitHub Pages</span>
+
+<span class="hl-comment"># Déclencheur : s'exécute à chaque push sur main</span>
 <span class="hl-yaml-key">on</span>:
   <span class="hl-yaml-key">push</span>:
     <span class="hl-yaml-key">branches</span>:
       - <span class="hl-yaml-val">main</span>
 
+  <span class="hl-comment"># Permet aussi un déclenchement manuel depuis l'UI GitHub</span>
+  <span class="hl-yaml-key">workflow_dispatch</span>:
+
+<span class="hl-comment"># Un seul job : "deploy" (d'autres jobs CI pourraient être ajoutés)</span>
 <span class="hl-yaml-key">jobs</span>:
   <span class="hl-yaml-key">deploy</span>:
+    <span class="hl-comment"># Runner : machine Ubuntu fournie gratuitement par GitHub</span>
     <span class="hl-yaml-key">runs-on</span>: <span class="hl-yaml-val">ubuntu-latest</span>
 
+    <span class="hl-comment"># Permissions nécessaires pour déployer sur Pages</span>
     <span class="hl-yaml-key">permissions</span>:
       <span class="hl-yaml-key">contents</span>: <span class="hl-yaml-val">read</span>
       <span class="hl-yaml-key">pages</span>: <span class="hl-yaml-val">write</span>
       <span class="hl-yaml-key">id-token</span>: <span class="hl-yaml-val">write</span>
 
+    <span class="hl-comment"># Environnement de déploiement (historise les déploiements)</span>
     <span class="hl-yaml-key">environment</span>:
       <span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">github-pages</span>
       <span class="hl-yaml-key">url</span>: <span class="hl-yaml-val">${{ steps.deployment.outputs.page_url }}</span>
 
+    <span class="hl-comment"># Les 4 étapes de la pipeline</span>
     <span class="hl-yaml-key">steps</span>:
+      <span class="hl-comment"># 1. Récupère le code source du dépôt</span>
       - <span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">Checkout repository</span>
         <span class="hl-yaml-key">uses</span>: <span class="hl-yaml-val">actions/checkout@v4</span>
 
+      <span class="hl-comment"># 2. Configure l'environnement GitHub Pages</span>
       - <span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">Setup Pages</span>
         <span class="hl-yaml-key">uses</span>: <span class="hl-yaml-val">actions/configure-pages@v4</span>
 
+      <span class="hl-comment"># 3. Empaquette tous les fichiers du site en un artifact</span>
       - <span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">Upload artifact</span>
         <span class="hl-yaml-key">uses</span>: <span class="hl-yaml-val">actions/upload-pages-artifact@v3</span>
         <span class="hl-yaml-key">with</span>:
           <span class="hl-yaml-key">path</span>: <span class="hl-yaml-val">'.'</span>
 
+      <span class="hl-comment"># 4. Déploie l'artifact sur GitHub Pages</span>
       - <span class="hl-yaml-key">name</span>: <span class="hl-yaml-val">Deploy to GitHub Pages</span>
         <span class="hl-yaml-key">id</span>: <span class="hl-yaml-val">deployment</span>
         <span class="hl-yaml-key">uses</span>: <span class="hl-yaml-val">actions/deploy-pages@v4</span></code></pre>
+          </div>
+
+          <p id="copy-feedback" class="copy-feedback" aria-live="polite"></p>
+
+          <div class="info-box info-box--tip">
+            <h4>🔍 Que fait chaque action&nbsp;?</h4>
+            <ul>
+              <li><strong><code>actions/checkout@v4</code></strong> — Clone le dépôt sur le runner
+                (comme un <code>git clone</code>).</li>
+              <li><strong><code>actions/configure-pages@v4</code></strong> — Détecte la configuration
+                Pages du dépôt et prépare le runner.</li>
+              <li><strong><code>actions/upload-pages-artifact@v3</code></strong> — Compresse le
+                dossier spécifié (<code>path: '.'</code>) en un artifact uploadé sur GitHub.</li>
+              <li><strong><code>actions/deploy-pages@v4</code></strong> — Prend l'artifact et le
+                publie sur l'infrastructure GitHub Pages (CDN mondiale).</li>
+            </ul>
+          </div>
         </div>
 
-        <p id="copy-feedback" class="copy-feedback" aria-live="polite"></p>
+        <!-- ================================================================ -->
+        <!-- SECTION 6 – Déclencher et suivre la pipeline                     -->
+        <!-- ================================================================ -->
+        <div class="guide-section">
+          <h3>6. Déclencher la pipeline et suivre son exécution</h3>
+          <ol class="numbered-list">
+            <li>Après avoir commité le fichier <code>deploy.yml</code>, GitHub détecte
+                automatiquement le nouveau workflow.</li>
+            <li>Allez dans l'onglet <strong>Actions</strong> de votre dépôt. Vous y voyez
+                une liste des <em>workflow runs</em>.</li>
+            <li>Cliquez sur la run en cours (cercle jaune) pour voir les logs en temps réel
+                — chaque étape est affichée avec son statut (✅ succès, ❌ échec).</li>
+            <li>En fin d'exécution, le cercle devient vert ✅ (succès) ou rouge ❌ (échec).</li>
+          </ol>
+          <p>
+            <strong>À quoi ressemble un run&nbsp;?</strong> Cliquez sur <strong>Simuler</strong>
+            ci-dessous pour voir l'ordre des étapes.
+          </p>
 
-        <!-- Bouton de démo -->
-        <div class="demo-action">
-          <h3>🔄 Simuler un déclenchement CI/CD</h3>
-          <p>Cliquez sur le bouton ci-dessous pour simuler un push sur <code>main</code> et
-             voir la pipeline s'exécuter (animation).</p>
-          <button class="btn-demo" id="btn-demo-push">🚀 Simuler un push</button>
-          <div class="pipeline-visual" id="pipeline-visual" aria-hidden="true">
-            <div class="pipeline-step" data-status="pending">
-              <span class="pipeline-step__icon">⏳</span>
-              Checkout
+          <!-- Bouton de démo -->
+          <div class="demo-action">
+            <h4>🔄 Simuler un déclenchement CI/CD</h4>
+            <p>Cliquez sur le bouton pour simuler un <code>git push</code> sur <code>main</code>
+               et observer l'exécution séquentielle des 4 étapes de la pipeline.</p>
+            <button class="btn-demo" id="btn-demo-push">🚀 Simuler un push</button>
+            <div class="pipeline-visual" id="pipeline-visual" aria-hidden="true">
+              <div class="pipeline-step" data-status="pending">
+                <span class="pipeline-step__icon">⏳</span>
+                Checkout
+              </div>
+              <div class="pipeline-step" data-status="pending">
+                <span class="pipeline-step__icon">⏳</span>
+                Setup Pages
+              </div>
+              <div class="pipeline-step" data-status="pending">
+                <span class="pipeline-step__icon">⏳</span>
+                Upload artifact
+              </div>
+              <div class="pipeline-step" data-status="pending">
+                <span class="pipeline-step__icon">⏳</span>
+                Deploy
+              </div>
             </div>
-            <div class="pipeline-step" data-status="pending">
-              <span class="pipeline-step__icon">⏳</span>
-              Setup Pages
-            </div>
-            <div class="pipeline-step" data-status="pending">
-              <span class="pipeline-step__icon">⏳</span>
-              Upload artifact
-            </div>
-            <div class="pipeline-step" data-status="pending">
-              <span class="pipeline-step__icon">⏳</span>
-              Deploy
-            </div>
+          </div>
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- SECTION 7 – Vérifier le déploiement                               -->
+        <!-- ================================================================ -->
+        <div class="guide-section">
+          <h3>7. Vérifier le déploiement en ligne</h3>
+          <ol class="numbered-list">
+            <li>Une fois la pipeline terminée (✅), retournez dans <strong>Settings → Pages</strong>.</li>
+            <li>En haut de la page, un message vert indique&nbsp;:
+                <em>«&nbsp;Your site is live at
+                <code>https://votre-utilisateur.github.io/devops-academy/</code>&nbsp;»</em>.</li>
+            <li>Cliquez sur le lien ou ouvrez-le dans un nouvel onglet.</li>
+            <li>Vous devriez voir exactement le même contenu que sur votre machine locale.</li>
+          </ol>
+          <div class="info-box">
+            <h4>📌 À savoir</h4>
+            <p>
+              La première exécution peut prendre <strong>1 à 2 minutes</strong> (téléchargement
+              des actions, upload, propagation CDN). Les runs suivants sont plus rapides
+              car les actions sont mises en cache.
+            </p>
+          </div>
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- SECTION 8 – Cycle DevOps complet : modifier et redéployer        -->
+        <!-- ================================================================ -->
+        <div class="guide-section">
+          <h3>8. Le cycle DevOps complet — modifier et redéployer</h3>
+          <p>
+            La puissance du DevOps, c'est le <strong>cycle itératif</strong>. Essayez&nbsp;:
+          </p>
+          <ol class="numbered-list">
+            <li>Modifiez un fichier localement (par exemple changez le titre dans
+                <code>index.html</code>).</li>
+            <li>Commitez et poussez&nbsp;:
+              <div class="code-sample code-sample--inline">
+                <pre><code>git add index.html
+git commit -m "feat: mettre à jour le titre de l'accueil"
+git push</code></pre>
+              </div>
+            </li>
+            <li>Allez dans l'onglet <strong>Actions</strong> — une nouvelle run démarre
+                automatiquement.</li>
+            <li>Une fois la run terminée, rafraîchissez le site : le changement est en ligne.</li>
+          </ol>
+          <div class="info-box info-box--tip">
+            <h4>🔁 C'est ça, le Continuous Deployment&nbsp;!</h4>
+            <p>
+              Chaque commit sur <code>main</code> est automatiquement <strong>intégré</strong>
+              (CI) et <strong>déployé</strong> (CD) sans intervention humaine.
+              En entreprise, on ajoute des tests automatisés dans la pipeline pour
+              <em>valider</em> le code avant déploiement.
+            </p>
+          </div>
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- SECTION 9 – Plan gratuit : limites et monitoring                 -->
+        <!-- ================================================================ -->
+        <div class="guide-section">
+          <h3>9. Plan gratuit — limites et comment les surveiller</h3>
+          <p>
+            Le plan Free de GitHub est généreux mais pas illimité. Voici ce qu'il faut
+            surveiller&nbsp;:
+          </p>
+          <div class="table-wrap">
+            <table class="limits-table">
+              <thead>
+                <tr>
+                  <th>Ressource</th>
+                  <th>Limite Free</th>
+                  <th>Consommation estimée pour ce projet</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Minutes GitHub Actions / mois</td>
+                  <td>2 000 min</td>
+                  <td>~30 sec par run → <strong>~1 200 runs/mois</strong></td>
+                </tr>
+                <tr>
+                  <td>Stockage des artefacts</td>
+                  <td>500 Mo</td>
+                  <td>~50 Ko par artifact → négligeable</td>
+                </tr>
+                <tr>
+                  <td>Jobs simultanés</td>
+                  <td>20 jobs</td>
+                  <td>1 job → aucun risque</td>
+                </tr>
+                <tr>
+                  <td>GitHub Pages</td>
+                  <td>1 site par dépôt (public)</td>
+                  <td>Parfaitement adapté</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Pour surveiller votre consommation, allez dans
+            <strong>Settings → Billing and plans</strong> de votre compte GitHub.
+            Vous y voyez les minutes Actions utilisées ce mois-ci.
+          </p>
+          <div class="info-box info-box--warn">
+            <h4>⚠️ Bien régler le comportement du workflow</h4>
+            <p>
+              Si vous poussez 50 fois par jour sur <code>main</code>, vous consommerez
+              environ <strong>25 minutes/mois</strong> — bien en dessous du quota.
+              Évitez de déclencher la pipeline sur des branches de travail (feature)
+              inutilement ; utilisez <code>on: push: branches: [main]</code> comme dans
+              l'exemple.
+            </p>
+          </div>
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- SECTION 10 – Dépannage                                           -->
+        <!-- ================================================================ -->
+        <div class="guide-section">
+          <h3>10. Dépannage — problèmes courants</h3>
+          <div class="troubleshooting">
+            <details class="troubleshooting__item">
+              <summary class="troubleshooting__question">
+                ❌ La run Actions échoue avec «&nbsp;Error: No uploaded artifact was found&nbsp;»
+              </summary>
+              <div class="troubleshooting__answer">
+                <p>Vérifiez que le paramètre <code>path</code> dans l'étape
+                <code>upload-pages-artifact</code> pointe vers le bon dossier.
+                Pour ce projet, utilisez <code>path: '.'</code> (tout le dépôt).</p>
+              </div>
+            </details>
+            <details class="troubleshooting__item">
+              <summary class="troubleshooting__question">
+                ❌ Le site affiche une page blanche ou une erreur 404
+              </summary>
+              <div class="troubleshooting__answer">
+                <ol>
+                  <li>Vérifiez que le fichier <code>index.html</code> est bien à la racine du dépôt.</li>
+                  <li>Assurez-vous que GitHub Pages est activé (Settings → Pages) sur la branche
+                      <code>main</code>, dossier <code>/ (root)</code>.</li>
+                  <li>Si l'URL est <code>https://user.github.io/devops-academy/</code> et que le
+                      site appelle des ressources en relatif, vérifiez les chemins (ils doivent
+                      être relatifs).</li>
+                  <li>Patientez 1 à 2 minutes après le déploiement — le cache CDN peut prendre
+                      un peu de temps.</li>
+                </ol>
+              </div>
+            </details>
+            <details class="troubleshooting__item">
+              <summary class="troubleshooting__question">
+                ❌ «&nbsp;Permission denied&nbsp;» ou «&nbsp;Resource not accessible by integration&nbsp;»
+              </summary>
+              <div class="troubleshooting__answer">
+                <p>Votre workflow doit déclarer les permissions suivantes dans le job&nbsp;:</p>
+                <div class="code-sample code-sample--inline">
+                  <pre><code>permissions:
+  contents: read
+  pages: write
+  id-token: write</code></pre>
+                </div>
+                <p>Ces permissions sont déjà présentes dans le fichier YAML fourni.</p>
+              </div>
+            </details>
+            <details class="troubleshooting__item">
+              <summary class="troubleshooting__question">
+                ❌ Mon push ne déclenche pas la pipeline
+              </summary>
+              <div class="troubleshooting__answer">
+                <ol>
+                  <li>Vérifiez que le fichier est bien nommé <code>.github/workflows/deploy.yml</code>
+                      (attention au <code>s</code> à <code>workflows</code>).</li>
+                  <li>Vérifiez que l'événement <code>on: push: branches: [main]</code> correspond
+                      à la branche sur laquelle vous poussez.</li>
+                  <li>Allez dans l'onglet Actions : si le workflow n'apparaît pas du tout,
+                      cliquez sur «&nbsp;New workflow&nbsp;» → cherchez votre fichier YAML
+                      dans la liste.</li>
+                </ol>
+              </div>
+            </details>
+            <details class="troubleshooting__item">
+              <summary class="troubleshooting__question">
+                ❌ Je dépasse le quota gratuit de minutes Actions
+              </summary>
+              <div class="troubleshooting__answer">
+                <p>GitHub désactive automatiquement les workflows pour le reste du mois.
+                Pour réduire la consommation&nbsp;:</p>
+                <ul>
+                  <li>Évitez les pushes inutiles sur <code>main</code>.</li>
+                  <li>Utilisez un runner auto-hébergé si vous avez une machine disponible.</li>
+                  <li>Passez à un plan Team (4 $/mois) ou utilisez le Student Pack.</li>
+                </ul>
+              </div>
+            </details>
           </div>
         </div>
 

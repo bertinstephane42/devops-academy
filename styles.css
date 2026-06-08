@@ -459,6 +459,236 @@ pre {
 /* ----- SYNTAX HIGHLIGHTING (YAML simulé) ----- */
 .hl-yaml-key  { color: #7dd3fc; }
 .hl-yaml-val  { color: #a5d6a7; }
+.hl-comment   { color: #94a3b8; font-style: italic; }
+
+/* ----- GUIDE SECTIONS ----- */
+.guide-section {
+  margin: var(--space-lg) 0;
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.guide-section:last-of-type {
+  border-bottom: none;
+}
+
+.guide-section > h3 {
+  font-size: 1.2rem;
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 2px solid var(--color-accent);
+  display: inline-block;
+}
+
+.guide-section > p {
+  font-size: 0.95rem;
+  color: var(--color-text-light);
+  margin-bottom: var(--space-sm);
+}
+
+.guide-section h4 {
+  font-size: 1rem;
+  color: var(--color-primary);
+  margin: var(--space-md) 0 var(--space-xs);
+}
+
+/* ----- INFO BOX VARIANTS ----- */
+.info-box--tip {
+  background: rgba(13, 43, 102, 0.06);
+  border-left-color: var(--color-primary);
+}
+
+.info-box--warn {
+  background: rgba(245, 158, 11, 0.08);
+  border-left-color: var(--color-warning);
+}
+
+/* ----- LISTES NUMÉROTÉES ----- */
+.numbered-list {
+  padding-left: 1.4em;
+  margin: var(--space-sm) 0;
+}
+
+.numbered-list li {
+  font-size: 0.95rem;
+  margin-bottom: var(--space-xs);
+  line-height: 1.55;
+}
+
+.numbered-list li::marker {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* ----- CODE SAMPLE INLINE (dans le texte) ----- */
+.code-sample--inline {
+  background: #1e293b;
+  border-radius: var(--radius-sm);
+  margin: var(--space-sm) 0;
+  overflow: hidden;
+  display: inline-block;
+  min-width: 60%;
+}
+
+.code-sample--inline pre {
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #e2e8f0;
+  overflow-x: auto;
+}
+
+.code-sample--inline code {
+  background: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* ----- GLOSSAIRE ----- */
+.glossary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+  margin: var(--space-md) 0;
+}
+
+.glossary-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.glossary-term {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-primary);
+  font-family: var(--font-mono);
+}
+
+.glossary-def {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  line-height: 1.45;
+}
+
+/* ----- TABLEAU DES LIMITES ----- */
+.table-wrap {
+  overflow-x: auto;
+  margin: var(--space-md) 0;
+}
+
+.limits-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.limits-table th {
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+  text-align: left;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.85rem;
+}
+
+.limits-table td {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.limits-table tr:last-child td {
+  border-bottom: none;
+}
+
+.limits-table tbody tr:hover {
+  background: rgba(13, 43, 102, 0.04);
+}
+
+/* ----- DÉPANNAGE (FAQ) ----- */
+.troubleshooting {
+  margin: var(--space-md) 0;
+}
+
+.troubleshooting__item {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-sm);
+  overflow: hidden;
+  background: var(--color-surface);
+  transition: box-shadow var(--transition-fast);
+}
+
+.troubleshooting__item:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.troubleshooting__item[open] {
+  border-color: var(--color-primary-light);
+}
+
+.troubleshooting__question {
+  padding: var(--space-sm) var(--space-md);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.troubleshooting__question::-webkit-details-marker {
+  display: none;
+}
+
+.troubleshooting__question::before {
+  content: '▶';
+  font-size: 0.75rem;
+  color: var(--color-accent);
+  transition: transform var(--transition-fast);
+}
+
+.troubleshooting__item[open] .troubleshooting__question::before {
+  transform: rotate(90deg);
+}
+
+.troubleshooting__answer {
+  padding: 0 var(--space-md) var(--space-sm);
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  line-height: 1.55;
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-sm);
+}
+
+.troubleshooting__answer ol,
+.troubleshooting__answer ul {
+  padding-left: 1.25em;
+  margin: var(--space-xs) 0;
+}
+
+.troubleshooting__answer li {
+  margin-bottom: var(--space-xs);
+}
+
+.troubleshooting__answer .code-sample--inline {
+  min-width: auto;
+  margin: var(--space-xs) 0;
+}
 
 /* ----- BOUTON COPIER ----- */
 .btn-copy {
@@ -637,6 +867,36 @@ pre {
 
   .pipeline-step {
     border-radius: var(--radius-sm);
+  }
+
+  .glossary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-section > h3 {
+    font-size: 1.1rem;
+  }
+
+  .limits-table {
+    font-size: 0.8rem;
+  }
+
+  .limits-table th,
+  .limits-table td {
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  .code-sample--inline {
+    min-width: auto;
+    display: block;
+  }
+
+  .code-sample--inline pre {
+    font-size: 0.7rem;
+  }
+
+  .troubleshooting__question {
+    font-size: 0.85rem;
   }
 }
 
