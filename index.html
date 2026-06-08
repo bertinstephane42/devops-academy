@@ -615,9 +615,10 @@ docs(readme): mettre à jour les instructions d'installation</code></pre>
             <li>Créez une branche : <code>git checkout -b feature/ma-modification</code>.</li>
             <li>Modifiez un fichier (ex. <code>index.html</code>) et commitez : <code>git add . && git commit -m "feat: ajouter ma modification"</code>.</li>
             <li>Poussez la branche : <code>git push origin feature/ma-modification</code>.</li>
-            <li>Ouvrez une Pull Request sur GitHub → cliquez sur <strong>Compare & pull request</strong>. Rédigez une description détaillée : contexte, changements, captures d'écran.</li>
-            <li>Ajoutez un commentaire de review sur votre propre PR (ou invitez un camarade).</li>
-            <li>Mergez la PR avec <strong>Squash and merge</strong>.</li>
+            <li>Ouvrez une Pull Request sur GitHub → rendez-vous sur la page de votre fork : une bannière jaune propose <strong>Compare & pull request</strong>. Cliquez dessus et rédigez une description détaillée : contexte, changements, captures d'écran.</li>
+            <li>Ajoutez un commentaire de review sur votre propre PR (onglet <strong>Files changed</strong>, survolez une ligne, cliquez sur le <strong>+</strong> bleu).</li>
+            <li>Mergez la PR avec <strong>Squash and merge</strong> (si le bouton est grisé, cliquez d'abord sur <strong>Update branch</strong> pour mettre à jour).</li>
+            <li>Après le merge, synchronisez votre dépôt local : <code>git checkout main && git pull</code>.</li>
           </ol>
           <div class="info-box info-box--tip">
             <h4>💡 Résultat attendu</h4>
@@ -873,6 +874,7 @@ jobs:
             Créez un workflow GitHub Actions qui exécute automatiquement les tests
             et le linting à chaque push et Pull Request.
           </p>
+          <p><strong>Prérequis :</strong> votre dépôt doit contenir un projet Node.js avec un fichier <code>package.json</code> et les scripts <code>test</code> et <code>lint</code> définis.</p>
           <ol class="numbered-list">
             <li>Dans votre dépôt, créez le dossier <code>.github/workflows/</code>.</li>
             <li>Créez le fichier <code>.github/workflows/ci.yml</code>.</li>
@@ -880,8 +882,8 @@ jobs:
             <li>Poussez le fichier sur la branche <code>main</code>.</li>
             <li>Ouvrez l'onglet <strong>Actions</strong> sur GitHub → le workflow se déclenche automatiquement.</li>
             <li>Cliquez sur la run pour voir les étapes en vert (success).</li>
-            <li>Créez une PR qui casse un test → le workflow passe en rouge → corrigez.</li>
-            <li>Ajoutez un badge CI dans le <code>README.md</code> : <code>[![CI](https://github.com/VOTRE-USER/VOTRE-REPO/actions/workflows/ci.yml/badge.svg)](...)</code>.</li>
+            <li>Créez une PR qui casse un test : modifiez un fichier de test (ex. <code>test.js</code>) pour introduire une erreur, ou supprimez une dépendance dans <code>package.json</code>. Poussez dans une nouvelle branche, ouvrez une PR, et observez le workflow passer en rouge. Corrigez ensuite l'erreur pour repasser en vert.</li>
+            <li>Ajoutez un badge CI dans le <code>README.md</code> : <code>[![CI](https://github.com/VOTRE-USER/VOTRE-REPO/actions/workflows/ci.yml/badge.svg)](https://github.com/VOTRE-USER/VOTRE-REPO/actions/workflows/ci.yml)</code>.</li>
           </ol>
           <div class="code-sample code-sample--inline">
             <div class="code-sample__header"><span>.github/workflows/ci.yml</span></div>
@@ -891,11 +893,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install
+          cache: npm
+      - run: npm ci
       - run: npm test
       - run: npm run lint</code></pre>
           </div>
@@ -1156,7 +1159,10 @@ EXPOSE 80</code></pre>
           <h3>🧪 Travaux pratiques — Déployer un site statique avec Vercel</h3>
           <p>
             Automatisez le déploiement continu d'un site statique avec Vercel,
-            avec previews automatiques pour chaque Pull Request.
+            avec previews automatiques pour chaque Pull Request. 
+            <strong>Prérequis :</strong> votre dépôt GitHub doit contenir un projet
+            statique (ex. le site HTML du TP Développement, ou tout projet
+            Vite/React que vous avez déjà créé).
           </p>
           <ol class="numbered-list">
             <li>Créez un compte gratuit sur <a href="https://vercel.com/signup" target="_blank" rel="noopener noreferrer">vercel.com</a> (via GitHub — pas de carte bleue).</li>
@@ -1164,7 +1170,7 @@ EXPOSE 80</code></pre>
             <li>Laissez les paramètres par défaut (Vercel détecte automatiquement le framework).</li>
             <li>Cliquez sur <strong>Deploy</strong>. Le site est en ligne en ~30 secondes.</li>
             <li>Vercel génère une URL unique (ex. <code>mon-projet.vercel.app</code>). Ouvrez-la.</li>
-            <li>Créez une PR sur GitHub avec une modification → Vercel crée automatiquement un <strong>Preview Deployment</strong> avec une URL dédiée.</li>
+            <li>Créez une PR sur GitHub avec une modification → Vercel crée automatiquement un <strong>Preview Deployment</strong> avec une URL dédiée. Ouvrez cette URL pour vérifier que le preview est en ligne.</li>
             <li>Dans Vercel, explorez l'onglet <strong>Deployments</strong> : historique, logs, rollback possible en 1 clic.</li>
           </ol>
           <div class="info-box info-box--tip">
@@ -1403,12 +1409,12 @@ EXPOSE 80</code></pre>
             visualiser des métriques et déclencher une alerte.
           </p>
           <ol class="numbered-list">
-            <li>Créez un compte gratuit sur <a href="https://grafana.com/signup" target="_blank" rel="noopener noreferrer">grafana.com</a> (plan <strong>Free</strong>, pas de carte bleue).</li>
+            <li>Créez un compte gratuit sur <a href="https://grafana.com/signup" target="_blank" rel="noopener noreferrer">grafana.com</a> (plan <strong>Free</strong>, pas de carte bleue). Vérifiez votre email pour activer le compte.</li>
             <li>Après connexion, accédez à votre instance Grafana (<code>VOTRE-NOM.grafana.net</code>).</li>
             <li>Cliquez sur <strong>Connections → Add new connection</strong> et ajoutez la source <strong>TestData</strong> (intégrée, aucune configuration requise).</li>
-            <li>Créez un dashboard : <strong>Dashboards → New → New dashboard</strong>. Ajoutez un panel <strong>Time series</strong> avec la source TestData et le scénario <strong>Random Walk</strong>.</li>
+            <li>Créez un dashboard : <strong>Dashboards → New → New dashboard</strong>. Ajoutez un panel <strong>Time series</strong> avec la source TestData et le scénario <strong>Random Walk</strong>. Cliquez sur <strong>Save</strong>, donnez un nom au dashboard.</li>
             <li>Explorez l'onglet <strong>Explore</strong> : sélectionnez TestData, choisissez le scénario <strong>CSV Metric Values</strong> et observez les données simulées.</li>
-            <li>Créez une alerte : <strong>Alerting → Alert rules → New rule</strong>. Choisissez la source TestData, sélectionnez <strong>Random Walk</strong>, définissez une condition <strong>IS ABOVE 80</strong>.</li>
+            <li>Créez une alerte : <strong>Alerting → Alert rules → New alert rule</strong>. Choisissez la source TestData, sélectionnez <strong>Random Walk</strong>, ajoutez une expression <strong>Reduce</strong> (fonction <strong>Last</strong>) puis une expression <strong>Threshold</strong> (Is above <strong>80</strong>).</li>
             <li>Configurez une notification (email ou Slack via webhook).</li>
           </ol>
           <div class="info-box info-box--tip">
@@ -1671,10 +1677,11 @@ resource "aws_instance" "app" {
           </p>
           <ol class="numbered-list">
             <li>Installez Terraform : <code>wget -qO- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg && echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list && sudo apt update && sudo apt install -y terraform</code></li>
+            <li>Vérifiez l'installation : <code>terraform --version</code>.</li>
             <li>Créez un dossier <code>tp-terraform/</code> et un fichier <code>main.tf</code> (voir l'encart "Code").</li>
             <li>Exécutez <code>terraform init</code> → télécharge le fournisseur <code>local</code>.</li>
             <li>Exécutez <code>terraform plan</code> → lisez le plan d'exécution. Que va créer Terraform ?</li>
-            <li>Exécutez <code>terraform apply -auto-approve</code> → vérifiez que <code>bonjour.txt</code> a été créé.</li>
+            <li>Exécutez <code>terraform apply -auto-approve</code> → vérifiez que <code>bonjour.txt</code> a été créé. Ouvrez le fichier <code>terraform.tfstate</code> — observez la structure JSON qui fait le lien entre votre déclaration et l'état réel.</li>
             <li>Modifiez <code>main.tf</code> (changez le message) puis relancez <code>terraform plan</code> et <code>terraform apply</code> → observez la modification.</li>
             <li>Exécutez <code>terraform destroy -auto-approve</code> → le fichier disparaît.</li>
           </ol>
@@ -1953,29 +1960,26 @@ spec:
         <div class="guide-section">
           <h3>🧪 Travaux pratiques — Déployer Nginx sur Kubernetes avec rolling update</h3>
           <p>
-            Utilisez <strong>Play with Kubernetes</strong> (gratuit, sans installation)
-            pour déployer une application, la scaler et effectuer une mise à jour
-            progressive sans downtime.
+            Utilisez <strong>Killercoda</strong> (gratuit, sans installation, recommandé
+            par kubernetes.io) qui fournit un cluster Kubernetes pré-initialisé prêt à
+            l'emploi. Connectez-vous avec un compte GitHub ou Google.
           </p>
           <ol class="numbered-list">
-            <li>Ouvrez <a href="https://labs.play-with-k8s.com/" target="_blank" rel="noopener noreferrer">labs.play-with-k8s.com</a> et cliquez sur <strong>Start</strong>.</li>
-            <li>Cliquez sur <strong>Add New Instance</strong> → un terminal apparaît.</li>
-            <li>Initialisez le cluster : <code>kubeadm init --apiserver-advertise-address=$(hostname -i) --pod-network-cidr=10.244.0.0/16</code>.</li>
-            <li>Suivez les instructions pour configurer <code>kubectl</code> (<code>mkdir -p $HOME/.kube && cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && chown $(id -u):$(id -g) $HOME/.kube/config</code>).</li>
-            <li>Installez le réseau Flannel : <code>kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</code>.</li>
+            <li>Ouvrez <a href="https://killercoda.com/playgrounds/scenario/kubernetes" target="_blank" rel="noopener noreferrer">killercoda.com/playgrounds/scenario/kubernetes</a> et cliquez sur <strong>Start</strong>. Choisissez l'image <code>kubernetes-kubeadm-1node</code>. ⏳ La session dure <strong>1 heure</strong> (gratuit, 4h avec compte PLUS).</li>
+            <li>Vérifiez que le cluster est opérationnel : <code>kubectl get nodes</code> → un nœud <code>Ready</code> s'affiche.</li>
             <li>Déployez Nginx : <code>kubectl create deployment hello-nginx --image=nginx:1.25</code>.</li>
             <li>Exposez le déploiement : <code>kubectl expose deployment hello-nginx --port=80 --type=NodePort</code>.</li>
             <li>Montez à 3 réplicas : <code>kubectl scale deployment hello-nginx --replicas=3</code> → <code>kubectl get pods -w</code>.</li>
-            <li>Faites un rolling update : <code>kubectl set image deployment/hello-nginx nginx=nginx:1.26</code> → <code>kubectl rollout status deployment/hello-nginx</code>.</li>
+            <li>Faites un rolling update : <code>kubectl set image deployment/hello-nginx nginx=nginx:1.26</code> → <code>kubectl rollout status deployment/hello-nginx</code>. Lancez <code>kubectl get pods -w &</code> <em>avant</em> la commande pour voir les pods se remplacer un par un en temps réel.</li>
             <li>Annulez le déploiement : <code>kubectl rollout undo deployment/hello-nginx</code> → vérifiez l'historique avec <code>kubectl rollout history deployment/hello-nginx</code>.</li>
-            <li>Vérifiez l'accès : dans l'interface PWK, le port <code>3xxxx</code> apparaît en haut de la page. Cliquez dessus pour ouvrir l'application Nginx dans un nouvel onglet.</li>
+            <li>Vérifiez l'accès : <code>kubectl get svc hello-nginx</code> → notez le port <code>3xxxx</code> (colonne <code>PORT(S)</code>). Testez depuis le terminal : <code>curl http://localhost:3xxxx</code> (remplacez <code>3xxxx</code>).</li>
           </ol>
           <div class="info-box info-box--tip">
             <h4>💡 Résultat attendu</h4>
-            <p>Un cluster Kubernetes fonctionnel avec 3 pods Nginx en écoute, un service NodePort qui expose l'application, un rolling update réussi et un rollback effectué. Toutes les commandes <code>kubectl</code> de base sont maîtrisées.</p>
+            <p>Un cluster Kubernetes avec 3 pods Nginx en écoute, un service NodePort exposé, un rolling update réussi de nginx:1.25 vers 1.26, et un rollback effectué. Toutes les commandes <code>kubectl</code> de base sont maîtrisées.</p>
           </div>
           <div class="demo-action">
-            <button class="btn-demo" onclick="window.open('https://labs.play-with-k8s.com/','_blank')">🚀 Lancer Play with K8s</button>
+            <button class="btn-demo" onclick="window.open('https://killercoda.com/playgrounds/scenario/kubernetes','_blank')">🚀 Lancer Killercoda K8s</button>
           </div>
         </div>
 
