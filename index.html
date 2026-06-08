@@ -445,9 +445,18 @@ git push -u origin main</code></pre>
                 réutilisable (ex: <code>actions/checkout@v4</code>).</span>
             </div>
             <div class="glossary-item">
-              <span class="glossary-term">Runner</span>
-              <span class="glossary-def">Machine virtuelle (Ubuntu, Windows, macOS) qui exécute le
-                job. Les runners hébergés par GitHub sont gratuits (limités).</span>
+              <span class="glossary-term">Runner (GitHub-hosted)</span>
+              <span class="glossary-def">Machine virtuelle gérée par GitHub (Ubuntu, Windows, macOS).
+                <strong>Zéro configuration</strong> — vous écrivez juste
+                <code>runs-on: ubuntu-latest</code> et GitHub fournit la machine gratuitement
+                (dans la limite du quota Free). C'est ce que nous utilisons.</span>
+            </div>
+            <div class="glossary-item">
+              <span class="glossary-term">Runner (Self-hosted)</span>
+              <span class="glossary-def">Votre propre machine (serveur local, VM, Raspberry Pi)
+                que vous connectez à GitHub via l'onglet <strong>Settings → Actions → Runners</strong>.
+                Utile si vous avez besoin de matériel spécifique ou dépassez le quota gratuit.
+                <strong>N'est pas requis</strong> pour ce projet.</span>
             </div>
             <div class="glossary-item">
               <span class="glossary-term">Action</span>
@@ -468,33 +477,54 @@ git push -u origin main</code></pre>
         </div>
 
         <!-- ================================================================ -->
-        <!-- SECTION 4 – Activer GitHub Pages                                 -->
+        <!-- SECTION 4 – Activer GitHub Pages (mode Actions)                  -->
         <!-- ================================================================ -->
         <div class="guide-section">
-          <h3>4. Activer GitHub Pages dans les paramètres</h3>
+          <h3>4. Activer GitHub Pages — choisir la source «&nbsp;GitHub Actions&nbsp;»</h3>
           <p>
-            GitHub Pages permet d'héberger un site statique directement depuis un dépôt.
-            Voici la procédure&nbsp;:
+            GitHub Pages propose <strong>deux modes</strong> de publication. Il est essentiel
+            de comprendre leur différence pour choisir le bon dans le cadre d'une démo CI/CD.
           </p>
+
+          <h4>🔹 Mode A — Deploy from a branch (simplifié, pas de CI/CD)</h4>
+          <p>
+            GitHub déploie directement le contenu d'une branche (ex: <code>main</code>) sans
+            pipeline. Simple, mais <strong>aucune CI/CD</strong> à montrer. Le site est mis à
+            jour automatiquement à chaque push, mais il n'y a ni test, ni build, ni visibilité
+            sur le processus.
+          </p>
+
+          <h4>🔹 Mode B — GitHub Actions (recommandé pour la démo — celui que nous utilisons)</h4>
+          <p>
+            Vous écrivez un <strong>workflow YAML</strong> qui contrôle exactement quand et
+            comment le site est construit et déployé. C'est <strong>la véritable CI/CD</strong>
+            que les étudiants doivent apprendre. Chaque exécution est tracée dans l'onglet
+            Actions avec logs détaillés.
+          </p>
+
+          <h4>Procédure pour choisir le mode GitHub Actions</h4>
           <ol class="numbered-list">
             <li>Ouvrez votre dépôt sur GitHub.</li>
             <li>Allez dans l'onglet <strong>Settings</strong> (le dernier en haut à droite).</li>
             <li>Dans le menu latéral gauche, cliquez sur <strong>Pages</strong>.</li>
-            <li>Sous «&nbsp;Branch&nbsp;», sélectionnez <strong>main</strong> et le dossier
-                <strong>/ (root)</strong>.</li>
-            <li>Cliquez sur <strong>Save</strong>.</li>
-            <li>Après quelques secondes, le message «&nbsp;Your site is live at
-                <code>https://votre-utilisateur.github.io/devops-academy/</code>&nbsp;»
-                apparaît en haut de la page.</li>
+            <li>Sous «&nbsp;Build and deployment&nbsp;», dans la liste déroulante
+                <strong>Source</strong>, sélectionnez <strong>GitHub Actions</strong>.
+                <br><em>Ne choisissez pas «&nbsp;Deploy from a branch&nbsp;» — cela contournerait
+                la pipeline CI/CD.</em></li>
+            <li>GitHub vous propose alors des templates de workflow. Cliquez sur
+                <strong>Cancel</strong> ou fermez la suggestion&nbsp;: nous allons écrire notre
+                propre workflow à l'étape suivante.</li>
           </ol>
+
           <div class="info-box">
-            <h4>📌 Ce qui se passe en coulisses</h4>
+            <h4>📌 Ce qui change avec le mode «&nbsp;GitHub Actions&nbsp;»</h4>
             <p>
-              Quand vous sélectionnez une branche, GitHub déploie automatiquement le contenu
-              du dossier racine de cette branche sur ses serveurs statiques (CDN).
-              Cependant, sans <strong>GitHub Actions</strong>, il n'y a <em>pas</em> de pipeline
-              CI/CD — le déploiement est automatique mais non industrialisé.
-              L'étape suivante ajoute la véritable chaîne CI/CD.
+              GitHub ne déploie plus automatiquement le contenu de la branche. Il attend
+              qu'un <strong>workflow</strong> (via <code>actions/deploy-pages</code>) publie
+              le site. Sans workflow, le site reste inactif. L'environnement de déploiement
+              <code>github-pages</code> est créé automatiquement lors de la première run.
+              C'est exactement ce que nous voulons&nbsp;: <strong>le pipeline contrôle
+              le déploiement</strong>, pas GitHub automatiquement.
             </p>
           </div>
         </div>
@@ -515,14 +545,28 @@ git push -u origin main</code></pre>
             <li>Sur la page d'accueil de votre dépôt, cliquez sur <strong>Add file</strong> →
                 <strong>Create new file</strong>.</li>
             <li>Dans le champ «&nbsp;Name your file...&nbsp;», tapez exactement&nbsp;:
-                <code>.github/workflows/deploy.yml</code>.</li>
+                <code>.github/workflows/deploy.yml</code>.
+                <br><em>Respectez l'emplacement et le nom — le dossier doit être
+                <code>.github/workflows/</code> (avec un <code>s</code>).</em></li>
             <li>Copiez le contenu YAML ci-dessous et collez-le dans l'éditeur en ligne.</li>
             <li>Cliquez sur <strong>Commit changes...</strong> → validez directement sur
                 <code>main</code>.</li>
           </ol>
+          <div class="info-box info-box--warn">
+            <h4>⚠️ Condition impérative pour voir le workflow dans Actions</h4>
+            <p>
+              Le fichier YAML doit se trouver sur la <strong>branche par défaut</strong>
+              du dépôt (généralement <code>main</code>). Si vous créez le fichier sur une
+              branche <em>feature</em>, le workflow <strong>n'apparaît pas</strong> dans
+              l'onglet Actions tant qu'il n'est pas fusionné sur <code>main</code>.
+              Validez <strong>directement sur <code>main</code></strong> ou mergez-y
+              la branche avant de chercher le workflow.
+            </p>
+          </div>
           <p>
             <em>Variante locale</em>&nbsp;: créez le dossier <code>.github/workflows/</code>
-            à la racine du projet, placez-y le fichier, puis <code>git add &amp;&amp; git commit &amp;&amp; git push</code>.
+            à la racine du projet, placez-y le fichier, puis <code>git add .github/ &amp;&amp; git commit -m "ci: ajout du workflow Pages" &amp;&amp; git push</code>.
+            Assurez-vous de pousser sur la branche <code>main</code>.
           </p>
 
           <!-- Fichier YAML avec annotations -->
@@ -607,10 +651,13 @@ git push -u origin main</code></pre>
         <div class="guide-section">
           <h3>6. Déclencher la pipeline et suivre son exécution</h3>
           <ol class="numbered-list">
-            <li>Après avoir commité le fichier <code>deploy.yml</code>, GitHub détecte
-                automatiquement le nouveau workflow.</li>
-            <li>Allez dans l'onglet <strong>Actions</strong> de votre dépôt. Vous y voyez
-                une liste des <em>workflow runs</em>.</li>
+            <li>Après avoir commité <strong>sur <code>main</code></strong> le fichier
+                <code>deploy.yml</code>, GitHub détecte automatiquement le nouveau workflow
+                et l'affiche dans l'onglet Actions. <em>Si vous ne le voyez pas,
+                vérifiez que vous êtes bien sur la branche par défaut.</em></li>
+            <li>Allez dans l'onglet <strong>Actions</strong> de votre dépôt. La colonne
+                de gauche liste les workflows disponibles ; cliquez sur
+                <em>«&nbsp;Deploy to GitHub Pages&nbsp;»</em> pour voir les exécutions.</li>
             <li>Cliquez sur la run en cours (cercle jaune) pour voir les logs en temps réel
                 — chaque étape est affichée avec son statut (✅ succès, ❌ échec).</li>
             <li>En fin d'exécution, le cercle devient vert ✅ (succès) ou rouge ❌ (échec).</li>
@@ -770,6 +817,52 @@ git push</code></pre>
           <div class="troubleshooting">
             <details class="troubleshooting__item">
               <summary class="troubleshooting__question">
+                ❌ Le workflow n'apparaît pas dans l'onglet Actions
+              </summary>
+              <div class="troubleshooting__answer">
+                <p>C'est le problème le plus fréquent. Causes possibles&nbsp;:</p>
+                <ol>
+                  <li><strong>Mauvaise branche</strong> — Le fichier doit être sur la branche
+                      par défaut (généralement <code>main</code>). S'il est sur une branche
+                      feature, il n'apparaît pas. Mergez-le ou recréez-le sur <code>main</code>.</li>
+                  <li><strong>Mauvais chemin</strong> — Le fichier doit être exactement à
+                      <code>.github/workflows/deploy.yml</code> (avec un <code>s</code>
+                      à <code>workflows</code>, et l'extension <code>.yml</code>).</li>
+                  <li><strong>Erreur YAML</strong> — Une erreur de syntaxe dans le fichier
+                      empêche GitHub de le lire. Vérifiez l'indentation (2 espaces).</li>
+                  <li><strong>Actions désactivé</strong> — Vérifiez dans Settings → Actions →
+                      General que «&nbsp;Allow all actions&nbsp;» est coché.</li>
+                  <li><strong>Source Pages mal configurée</strong> — Retournez dans
+                      Settings → Pages et vérifiez que la source est bien
+                      <strong>GitHub Actions</strong> (pas «&nbsp;Deploy from a branch&nbsp;»).</li>
+                </ol>
+              </div>
+            </details>
+            <details class="troubleshooting__item">
+              <summary class="troubleshooting__question">
+                ❌ Aucun runner affiché dans Settings → Actions → Runners
+              </summary>
+              <div class="troubleshooting__answer">
+                <p>
+                  Ce n'est pas une erreur, c'est <strong>normal</strong> sur un compte Free.
+                  La page «&nbsp;Runners&nbsp;» sert uniquement à configurer des
+                  <strong>self-hosted runners</strong> (vos propres machines). Notre workflow
+                  utilise <code>runs-on: ubuntu-latest</code> qui fait appel aux
+                  <strong>runners GitHub-hosted</strong> — des machines gérées par GitHub,
+                  gratuites et sans aucune configuration.
+                </p>
+                <p>
+                  <strong>Pour vérifier que les runners GitHub-hosted fonctionnent</strong>&nbsp;:
+                  lancez une exécution du workflow (via un push sur <code>main</code> ou le
+                  bouton <em>Run workflow</em> dans l'onglet Actions). Les logs montreront
+                  «&nbsp;Job is running on ubuntu-latest&nbsp;» — c'est la preuve que le
+                  runner GitHub-hosted est actif. Vous n'avez <strong>rien à configurer</strong>
+                  dans la section Runners.
+                </p>
+              </div>
+            </details>
+            <details class="troubleshooting__item">
+              <summary class="troubleshooting__question">
                 ❌ La run Actions échoue avec «&nbsp;Error: No uploaded artifact was found&nbsp;»
               </summary>
               <div class="troubleshooting__answer">
@@ -785,8 +878,8 @@ git push</code></pre>
               <div class="troubleshooting__answer">
                 <ol>
                   <li>Vérifiez que le fichier <code>index.html</code> est bien à la racine du dépôt.</li>
-                  <li>Assurez-vous que GitHub Pages est activé (Settings → Pages) sur la branche
-                      <code>main</code>, dossier <code>/ (root)</code>.</li>
+                  <li>Assurez-vous que GitHub Pages est activé (Settings → Pages) avec la source
+                      <strong>GitHub Actions</strong> (pas «&nbsp;Deploy from a branch&nbsp;»).</li>
                   <li>Si l'URL est <code>https://user.github.io/devops-academy/</code> et que le
                       site appelle des ressources en relatif, vérifiez les chemins (ils doivent
                       être relatifs).</li>
@@ -820,9 +913,11 @@ git push</code></pre>
                       (attention au <code>s</code> à <code>workflows</code>).</li>
                   <li>Vérifiez que l'événement <code>on: push: branches: [main]</code> correspond
                       à la branche sur laquelle vous poussez.</li>
+                  <li>Vérifiez que la source Pages est sur <strong>GitHub Actions</strong> et non
+                      «&nbsp;Deploy from a branch&nbsp;».</li>
                   <li>Allez dans l'onglet Actions : si le workflow n'apparaît pas du tout,
-                      cliquez sur «&nbsp;New workflow&nbsp;» → cherchez votre fichier YAML
-                      dans la liste.</li>
+                      cliquez sur le sélecteur de workflow à gauche (ou «&nbsp;New workflow&nbsp;»)
+                      et cherchez-y «&nbsp;Deploy to GitHub Pages&nbsp;».</li>
                 </ol>
               </div>
             </details>
