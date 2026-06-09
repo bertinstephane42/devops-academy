@@ -145,6 +145,296 @@
             <li><strong>Satisfaction clients</strong> – fonctionnalités livrées en continu, feedback immédiat.</li>
           </ul>
         </div>
+
+      <!-- ===== CONTENU PÉDAGOGIQUE SUPPLÉMENTAIRE ===== -->
+
+      <div class="guide-section">
+        <h3>📖 Concepts avancés — le cadre CALMS &amp; les métriques DORA</h3>
+        <p>
+          Pour un futur responsable, le DevOps ne se limite pas aux outils&nbsp;: c'est un
+          <strong>cadre de transformation organisationnelle</strong>. Le modèle
+          <strong>CALMS</strong> (défini par Jez Humble et Gene Kim) décompose le DevOps en
+          cinq piliers&nbsp;:
+        </p>
+        <ul>
+          <li><strong>Culture</strong> – collaboration, confiance, expérimentation, fin des silos.
+            Sans changement culturel, les outils ne servent à rien.</li>
+          <li><strong>Automation</strong> – CI/CD, IaC, tests automatisés.
+            L'automatisation supprime les erreurs manuelles et libère du temps pour l'innovation.</li>
+          <li><strong>Lean</strong> – élimination des gaspillages, flux tiré, amélioration continue
+            (Kaizen). Inspiré du Toyota Production System.</li>
+          <li><strong>Measurement</strong> – tout doit être mesuré&nbsp;: lead time, fréquence de
+            déploiement, MTTR, taux d'échec. Les <strong>4 métriques clés DORA</strong> sont
+            devenues le standard du pilotage d'équipe.</li>
+          <li><strong>Sharing</strong> – partage des connaissances, des succès et des échecs.
+            Les post-mortems sans blame sont une pratique clé.</li>
+        </ul>
+        <p>
+          Les <strong>4 métriques DORA</strong> (DevOps Research &amp; Assessment, Google, 2024)&nbsp;:
+        </p>
+        <div class="table-wrap">
+          <table class="limits-table">
+            <thead>
+              <tr>
+                <th>Métrique</th>
+                <th>Définition</th>
+                <th>Elite</th>
+                <th>Low</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Deployment Frequency</strong></td>
+                <td>Fréquence des déploiements en production</td>
+                <td>Plusieurs fois / jour</td>
+                <td>Une fois / mois ou moins</td>
+              </tr>
+              <tr>
+                <td><strong>Lead Time for Changes</strong></td>
+                <td>Temps entre le commit et le déploiement</td>
+                <td>&lt; 1 heure</td>
+                <td>1 à 6 mois</td>
+              </tr>
+              <tr>
+                <td><strong>Mean Time to Restore (MTTR)</strong></td>
+                <td>Temps de récupération après un incident</td>
+                <td>&lt; 1 heure</td>
+                <td>&gt; 1 semaine</td>
+              </tr>
+              <tr>
+                <td><strong>Change Failure Rate</strong></td>
+                <td>% de déploiements qui causent un incident</td>
+                <td>5–10 %</td>
+                <td>45–60 %</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          En complément, le <strong>Platform Engineering</strong> émerge comme l'évolution
+          naturelle du DevOps&nbsp;: construire une <strong>plateforme interne</strong> (IDP)
+          qui offre aux équipes Dev des self-services fiables, tout en centralisant la
+          gouvernance, la sécurité et les coûts. Le <strong>SRE</strong> (Site Reliability
+          Engineering) apporte une rigueur d'ingénierie aux opérations avec des SLO
+          (Service Level Objectives) et des <strong>error budgets</strong>.
+        </p>
+      </div>
+
+      <div class="guide-section">
+        <h3>⚠️ Pièges à éviter dans une transformation DevOps</h3>
+        <div class="troubleshooting">
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Créer une «&nbsp;équipe DevOps&nbsp;» isolée</summary>
+            <div class="troubleshooting__answer">
+              Une équipe DevOps dédiée crée un <strong>nouveau silo</strong>. Le DevOps n'est
+              pas un rôle ou une équipe, mais une <strong>culture partagée</strong> par toutes
+              les équipes. Les «&nbsp;DevOps Engineers&nbsp;» doivent être des accélérateurs
+              disséminés dans les équipes feature, pas une équipe séparée.
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Outils d'abord, culture après</summary>
+            <div class="troubleshooting__answer">
+              Investir dans Jenkins, Docker, Kubernetes sans changer les processus humains
+              mène à un <strong>échec cuisant</strong>. La transformation DevOps est
+              <strong>organisationnelle avant d'être technique</strong>. Commencez par la
+              collaboration, la confiance et l'expérimentation.
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Ignorer la sécurité (DevSecOps)</summary>
+            <div class="troubleshooting__answer">
+              Ajouter la sécurité en fin de cycle (security gate) ralentit tout. Intégrez la
+              sécurité <strong>dès la planification</strong> (Shift Left)&nbsp;: analyse
+              statique (SAST), analyse de dépendances (SCA), secrets detection dans la CI,
+              politiques Kubernetes en GitOps (Kyverno, OPA).
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Piloter sur des vanity metrics</summary>
+            <div class="troubleshooting__answer">
+              Mesurer le nombre de déploiements sans suivre le <strong>Change Failure Rate</strong>
+              ou le <strong>MTTR</strong> donne une illusion de performance. Les <strong>4
+              métriques DORA</strong> sont le standard du pilotage d'équipe DevOps. Sans
+              elles, vous ne savez pas si vous vous améliorez vraiment.
+            </div>
+          </details>
+          <details class="troubleshooting__item">
+            <summary class="troubleshooting__question">Sauter les post-mortems ou les transformer en chasse aux sorcières</summary>
+            <div class="troubleshooting__answer">
+              Sans rétrospective <strong>sans blame</strong>, les incidents se répètent et
+              la peur de la sanction pousse les équipes à cacher les problèmes. La culture
+              <strong>Just Culture</strong> distingue les erreurs humaines (système à
+              améliorer) des comportements à risque (procédure à clarifier).
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>📚 Lexique du décideur DevOps</h3>
+        <div class="glossary-grid">
+          <div class="glossary-item">
+            <span class="glossary-term">Lead Time</span>
+            <span class="glossary-def">Temps total entre l'identification d'un besoin et sa mise
+              en production. Objectif&nbsp;: quelques minutes, pas des mois.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Deployment Frequency</span>
+            <span class="glossary-def">Nombre de déploiements par unité de temps. Les équipes
+              Elite déploient plusieurs fois par jour.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">MTTR</span>
+            <span class="glossary-def">Mean Time to Restore. Temps de récupération après un
+              incident. Indicateur clé de résilience.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Change Failure Rate</span>
+            <span class="glossary-def">Pourcentage de déploiements qui entraînent un incident
+              ou une dégradation du service.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">SLO / SLI / SLA</span>
+            <span class="glossary-def">Objectif de niveau de service (SLO), indicateur (SLI),
+              accord (SLA). Cadre pour définir et mesurer la fiabilité.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Error Budget</span>
+            <span class="glossary-def">Budget d'erreur = 100 % − SLO. Tant que le budget n'est
+              pas épuisé, l'équipe peut prendre des risques contrôlés.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">CALMS</span>
+            <span class="glossary-def">Acronyme des cinq piliers DevOps&nbsp;: Culture,
+              Automation, Lean, Measurement, Sharing.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">DevSecOps</span>
+            <span class="glossary-def">Intégration de la sécurité dans le cycle DevOps, de la
+              planification au déploiement (Shift Left Security).</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">GitOps</span>
+            <span class="glossary-def">Approche où Git est la source de vérité unique pour
+              l'infrastructure et les déploiements. Le cluster converge vers l'état désiré.</span>
+          </div>
+          <div class="glossary-item">
+            <span class="glossary-term">Platform Engineering</span>
+            <span class="glossary-def">Construction d'une plateforme interne (IDP) pour
+              offrir des self-services fiables aux équipes Dev.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>📊 Chiffres clés — le ROI du DevOps</h3>
+        <div class="card">
+          <p><strong>Rapport DORA 2024 (Google Cloud)</strong> — comparaison entre les équipes
+            <strong>Elite</strong> (top 7 %) et <strong>Low performers</strong>&nbsp;:</p>
+          <div class="table-wrap">
+            <table class="limits-table">
+              <thead>
+                <tr>
+                  <th>Indicateur</th>
+                  <th>Elite</th>
+                  <th>Low</th>
+                  <th>Impact</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Fréquence de déploiement</td>
+                  <td>Plusieurs fois / jour</td>
+                  <td>≤ 1 / mois</td>
+                  <td>🎯 200× plus fréquent</td>
+                </tr>
+                <tr>
+                  <td>Lead Time</td>
+                  <td>&lt; 1 heure</td>
+                  <td>1–6 mois</td>
+                  <td>⚡ 2 500× plus rapide</td>
+                </tr>
+                <tr>
+                  <td>MTTR</td>
+                  <td>&lt; 1 heure</td>
+                  <td>&gt; 1 semaine</td>
+                  <td>🔄 2 500× plus rapide</td>
+                </tr>
+                <tr>
+                  <td>Change Failure Rate</td>
+                  <td>5–10 %</td>
+                  <td>45–60 %</td>
+                  <td>🛡️ 7× moins d'incidents</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            <strong>Autres études&nbsp;:</strong> le <strong>State of DevOps Report</strong>
+            (Puppet) montre que les organisations matures réduisent leur <strong>Time to Market</strong>
+            de 50 % et augmentent leur <strong>productivité</strong> de 25 %. Une étude
+            McKinsey estime que la transformation DevOps peut améliorer la <strong>satisfaction
+            client</strong> de 30 % et réduire les coûts opérationnels de 20 %. Le
+            <strong>ROI</strong> est maximisé quand la culture précède les outils.
+          </p>
+        </div>
+        <div class="info-box info-box--tip">
+          <h4>💡 À retenir pour votre futur rôle</h4>
+          <p>
+            En tant que futur manager, votre mission n'est pas d'être expert de tous les
+            outils, mais de <strong>créer les conditions</strong> de la transformation&nbsp;:
+            sécurité psychologique, objectifs mesurables (DORA), budget pour l'expérimentation,
+            et remontée des contraintes techniques vers les décisions métier.
+          </p>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>🧠 Quiz express — préparez-vous au rôle de responsable</h3>
+        <div class="quiz">
+          <div class="quiz__question">
+            <p class="quiz__text">1. Que signifie le «&nbsp;M&nbsp;» dans le modèle CALMS ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">Management</li>
+              <li class="quiz__option" data-correct="false">Maintenance</li>
+              <li class="quiz__option" data-correct="true">Measurement</li>
+              <li class="quiz__option" data-correct="false">Monitoring</li>
+            </ul>
+            <p class="quiz__feedback">CALMS = <strong>C</strong>ulture, <strong>A</strong>utomation,
+              <strong>L</strong>ean, <strong>M</strong>easurement, <strong>S</strong>haring.
+              Le Measurement est essentiel&nbsp;: sans métriques (DORA, SLO), vous pilotez
+              à l'aveugle.</p>
+          </div>
+          <div class="quiz__question">
+            <p class="quiz__text">2. Quelle métrique DORA mesure le temps de récupération après un incident ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">Deployment Frequency</li>
+              <li class="quiz__option" data-correct="false">Lead Time for Changes</li>
+              <li class="quiz__option" data-correct="true">Mean Time to Restore (MTTR)</li>
+              <li class="quiz__option" data-correct="false">Change Failure Rate</li>
+            </ul>
+            <p class="quiz__feedback">Le <strong>MTTR</strong> (Mean Time to Restore) mesure
+              le temps nécessaire pour rétablir le service après un incident. Les équipes
+              Elite le mesurent en minutes, les Low performers en semaines.</p>
+          </div>
+          <div class="quiz__question">
+            <p class="quiz__text">3. Pourquoi créer une «&nbsp;équipe DevOps&nbsp;» dédiée est-il un piège ?</p>
+            <ul class="quiz__options">
+              <li class="quiz__option" data-correct="false">Parce qu'il faut embaucher trop de monde</li>
+              <li class="quiz__option" data-correct="true">Parce que cela crée un nouveau silo, contraire à l'esprit DevOps</li>
+              <li class="quiz__option" data-correct="false">Parce que les outils DevOps ne sont pas compatibles</li>
+              <li class="quiz__option" data-correct="false">Parce que le management n'aime pas les équipes spécialisées</li>
+            </ul>
+            <p class="quiz__feedback">Le DevOps est une <strong>culture partagée</strong>,
+              pas un rôle. Une équipe DevOps dédiée recrée le silo qu'on cherche à éliminer.
+              Les experts DevOps doivent être <strong>embarqués</strong> dans les équipes
+              feature pour diffuser les pratiques.</p>
+          </div>
+          <p class="quiz__result"></p>
+        </div>
+      </div>
+
       </div>
     </section>
 
